@@ -1,7 +1,10 @@
 package com.wayne.model;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
@@ -15,19 +18,12 @@ public class BbsUser{
 	@Id
 	@GeneratedValue
 	private Integer id ;
-	@Column(name = "level")
-	private Integer level ;
-	@Column(name = "score")
-	private Integer score ;
-	@Column(name = "balance")
-	private Integer balance;
-	@Column(name = "password")
-	private String password;
-	@Column(name = "email")
-	private String email ;
-	@Column(name = "userName")
 	private String userName ;
-	@Column(name = "corp")
+	private String password;
+	private String email ;
+	private Integer score ;
+	private Integer level ;
+	private Integer balance;
 	private String corp;
 	
 	public Integer getId() {
