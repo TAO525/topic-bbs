@@ -12,8 +12,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "bbs_message")
-public class BbsMessage  {
-	@Id
+public class BbsMessage extends BaseModel {
+    @Id
 	@GeneratedValue
 	private Integer id ;
 	private Integer status ;

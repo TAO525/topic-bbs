@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "bbs_reply")
-public class BbsReply {
+public class BbsReply extends BaseModel {
 	@Id
 	@GeneratedValue
 	private Integer id ;
@@ -22,8 +22,6 @@ public class BbsReply {
 	private Integer userId ;
 	private String content ;
 	private Date createTime ;
-	private BbsUser user;
-	private BbsTopic topic;
 	public Integer getId() {
 		return id;
 	}
@@ -72,19 +70,4 @@ public class BbsReply {
 		this.createTime = createTime;
 	}
 
-	public BbsUser getUser() {
-		return user;
-	}
-
-	public void setUser(BbsUser user) {
-		this.user = user;
-	}
-
-	public BbsTopic getTopic() {
-		return topic;
-	}
-
-	public void setTopic(BbsTopic topic) {
-		this.topic = topic;
-	}
 }

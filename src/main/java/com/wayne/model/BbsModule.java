@@ -12,8 +12,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "bbs_module")
-public class BbsModule  {
-	@Id
+@org.hibernate.annotations.Proxy(lazy = false)
+public class BbsModule extends BaseModel {
+    @Id
 	@GeneratedValue
 	private Integer id ;
 	private Integer turn ;

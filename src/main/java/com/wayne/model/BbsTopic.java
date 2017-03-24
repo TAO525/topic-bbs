@@ -1,9 +1,6 @@
 package com.wayne.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -13,8 +10,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "bbs_topic")
-public class BbsTopic{
-	@Id
+public class BbsTopic extends BaseModel {
+    @Id
 	@GeneratedValue
 	private Integer id ;
 	private Integer emotion ;
@@ -27,8 +24,9 @@ public class BbsTopic{
 	private Integer userId ;
 	private String content ;
 	private Date createTime ;
-	private BbsUser user;
-	private BbsModule module;
+
+    @Transient
+    private BbsUser user;
 
 	public Integer getId() {
 		return id;
@@ -126,11 +124,4 @@ public class BbsTopic{
 		this.user = user;
 	}
 
-	public BbsModule getModule() {
-		return module;
-	}
-
-	public void setModule(BbsModule module) {
-		this.module = module;
-	}
 }

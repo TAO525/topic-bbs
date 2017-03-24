@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "bbs_post")
-public class BbsPost{
-	@Id
+public class BbsPost extends BaseModel {
+    @Id
 	@GeneratedValue
 	private Integer id ;
 	private Integer hasReply ;

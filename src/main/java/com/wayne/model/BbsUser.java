@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "bbs_user")
-public class BbsUser{
+public class BbsUser extends BaseModel {
 
 	@Id
 	@GeneratedValue
@@ -74,6 +74,4 @@ public class BbsUser{
 	public void setCorp(String corp) {
 		this.corp = corp;
 	}
-	
-	
 }
