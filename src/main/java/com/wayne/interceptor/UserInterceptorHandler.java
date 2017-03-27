@@ -11,11 +11,13 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 @Component
 public class UserInterceptorHandler extends HandlerInterceptorAdapter {
@@ -28,10 +30,16 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-		/*if (bbsUserRepository == null) {//解决service为null无法注入问题
-			BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-			bbsUserRepository = (BbsUserRepository) factory.getBean("bbsUserRepository");
-		}*/
+		/*
+		 * 没有加@Auth 注解的就不需要过拦截器了
+		 */
+		final HandlerMethod handlerMethod = (HandlerMethod) handler;
+		final Method method = handlerMethod.getMethod();
+		final Class<?> clazz = method.getDeclaringClass();
+		if (!clazz.isAnnotationPresent(Auth.class) &&
+				!method.isAnnotationPresent(Auth.class)) {
+				return true;
+		}
 
 		/*
 			拦截器中无法注入service 手动加载 bbsUserService对应在factory 里面的bean name 为bbsUserServiceImpl
