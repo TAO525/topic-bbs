@@ -28,6 +28,11 @@ public class BbsUserServiceImpl implements BbsUserService {
     }
 
     @Override
+    public BbsUser getUser(Integer userId) {
+        return bbsUserRepository.findOne(userId);
+    }
+
+    @Override
     public BbsUser getUserAccount(String userName, String password) {
         String pwd = HashUtil.generatePwd(password);
         return bbsUserRepository.findByUserNameAndPassword(userName, pwd);

@@ -3,6 +3,7 @@ package com.wayne.action;
 import com.wayne.service.BbsUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -16,8 +17,10 @@ public class HelloController {
     private BbsUserService bbsUserService;
 
     @RequestMapping("/hello")
-    public String say(){
-        return "hello SpringBoot";
+    public ModelAndView say(){
+        System.out.println(bbsUserService) ;
+
+        return new ModelAndView("hello");
     }
 
 }

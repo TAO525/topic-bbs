@@ -1,8 +1,10 @@
 package com.wayne.service;
 
 import com.wayne.model.BbsUser;
+import org.springframework.stereotype.Service;
 
-public interface  BbsUserService {
+@Service
+public interface BbsUserService {
 
     /**
      * 保存用户
@@ -11,6 +13,14 @@ public interface  BbsUserService {
      * @return
      */
     BbsUser setUserAccount(BbsUser user);
+
+    /**
+     * 判断用户名是否存在
+     *
+     * @param userId
+     * @return
+     */
+    BbsUser getUser(Integer userId);
 
     /**
      * 根据用户名和密码获取用户
