@@ -1,7 +1,7 @@
 package com.wayne;
 
-import com.wayne.dao.BbsModuleRepository;
-import com.wayne.model.BbsModule;
+import com.wayne.model.BbsUser;
+import com.wayne.service.BbsUserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,11 +12,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BbsUserServiceTest extends BaseServiceTest {
 
     @Autowired
-    private BbsModuleRepository bbsModuleRepository;
+    private BbsUserService bbsUserService;
 
     @Test
-    public void test_module() throws Exception {
-        BbsModule module = bbsModuleRepository.getOne(1);
-        logger.info(module.toString());
+    public void test_getUserAccount() throws Exception {
+        BbsUser bbsUser = bbsUserService.getUserAccount("xxx", "123");
+        if (null != bbsUser) {
+            logger.info(bbsUser.toString());
+        }
+    }
+
+    @Test
+    public void test_hasUser() throws Exception {
+        Boolean result = bbsUserService.hasUser("xxx");
+        logger.info(result.toString());
+    }
+
+    @Test
+    public void test_setUserAccount() throws Exception {
+        BbsUser user = new BbsUser();
+        user.setPassword("1234567a");
+        BbsUser result = bbsUserService.setUserAccount(user);
+        logger.info(result.toString());
+    }
+
+    @Test
+    public void test_addTopicScore() {
+        bbsUserService.addTopicScore(1);
     }
 }

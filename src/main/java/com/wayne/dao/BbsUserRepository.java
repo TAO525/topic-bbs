@@ -9,4 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface BbsUserRepository extends JpaRepository<BbsUser, Integer> {
 
+    BbsUser findByUserNameAndPassword(String userName, String password);
+
+    boolean existsByUserName(String userName);
 }
