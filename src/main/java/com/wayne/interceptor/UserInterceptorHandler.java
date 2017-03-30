@@ -58,7 +58,8 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
 
 		if(!filter){
 //			response.sendRedirect("/login.html?referer="+java.net.URLEncoder.encode(request.getRequestURL().toString() , "UTF-8"));
-			logger.info("用户未登录");
+			logger.info("用户未登录:"+request.getRequestURL().toString());
+			response.sendRedirect("/bbs/user/login.html?referer="+java.net.URLEncoder.encode(request.getRequestURL().toString() , "UTF-8"));
 		}
 //        HandlerMethod  handlerMethod = (HandlerMethod ) handler ;
        /* Menu menu = handlerMethod.getMethod().getAnnotation(Menu.class) ;

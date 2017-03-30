@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,11 @@ public class LoginController extends BaseController{
     @Resource
     private BbsUserService bbsUserService;
 
+
+    @RequestMapping("/login.html")
+    public ModelAndView loginHtml(HttpServletRequest request, HttpServletResponse response){
+        return new ModelAndView("index");
+    }
 
     /**
      * 登录方法改为ajax方式登录
