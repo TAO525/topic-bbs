@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/signin.css" rel="stylesheet">
+    <link href="/css/regist.css" rel="stylesheet">
 
     <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
     <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
@@ -19,30 +19,11 @@
 </head>
 <body>
 
-<<#--div class="container">
-
-    <form class="form-signin" action="${ctxPath}/bbs/user/login" onsubmit="return ajaxSubmit(this,'reload')">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <div class="alert alert-danger alert-dismissable" id="tip"></div>
-
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="text" id="inputEmail" name="userName" class="form-control" placeholder="Email address" required autofocus>
-
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-
-        <label for="inputPassword" class="sr-only">密码确认</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
-
-</div>
--->
 
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
         <form class="form-horizontal m-t" id="signupForm" action="${ctxPath}/bbs/user/doRegister" method="POST" onsubmit="return ajaxSubmit(this)">
+            <div class="alert alert-danger alert-dismissable" id="tip"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">用户名：</label>
                 <div class="col-sm-8">
@@ -72,7 +53,7 @@
                 <label class="col-sm-3 control-label">验证码：</label>
                 <div class="col-sm-8" style="position:relative;">
                     <input id="code" name="code" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
-                    <img src="${ctxPath}/bbs/user/authImage" onclick="this.src='${ctxPath}/bbs/user/authImage?_='+Date.now()" title="点击刷新验证码" style="position:absolute;height:32px;top:1px;right:16px;cursor:pointer;border-radius:0 4px 4px 0">
+                    <img src="${ctxPath}/bbs/common/authImage" onclick="this.src='${ctxPath}/bbs/common/authImage?_='+Date.now()" title="点击刷新验证码" style="position:absolute;height:32px;top:1px;right:16px;cursor:pointer;border-radius:0 4px 4px 0">
                 </div>
             </div>
             <div class="form-group">

@@ -27,7 +27,6 @@ public class LoginController extends BaseController{
     @Resource
     private BbsUserService bbsUserService;
 
-    private static final String CODE_NAME = "verCode";
 
     @RequestMapping("/login.html")
     public ModelAndView loginHtml(HttpServletRequest request, HttpServletResponse response){

@@ -9,4 +9,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BaseController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    //验证码的key
+    protected static final String CODE_NAME = "verCode";
 }
