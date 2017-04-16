@@ -42,13 +42,13 @@
                     <input id="email" name="email" class="form-control" type="email" value=>
                 </div>
             </div>
-            <div class="form-group">
+           <#-- <div class="form-group">
                 <label class="col-sm-3 control-label">公司：</label>
                 <div class="col-sm-8">
                     <input id="corp" name="corp" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid" value=>
                     <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>留下你的公司名字，以方便beetl统计使用者，除非被黑客攻击，网站不会在任何情况下泄露你个人信息</span>
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label class="col-sm-3 control-label">验证码：</label>
                 <div class="col-sm-8" style="position:relative;">

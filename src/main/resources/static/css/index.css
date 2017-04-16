@@ -1,0 +1,13 @@
+.topic{position:relative;width: 100%;overflow: hidden;padding: 10px 0;border-top: 1px solid #ddd}
+.topic>div{float: left;}
+.topic .div1{width: 50px;height: 40px;text-align: center;background-color: #009a61;color: #fff;}
+.topic .div1>div:first-child,.topic .div2>div:first-child{line-height: 25px;height: 25px;}
+.topic .div1>div:last-child,.topic .div2>div:last-child{font-size: 12px;line-height: 10px;height: 10px;}
+.topic .div2{width: 75px;height: 40px;text-align: center;color: #999}
+.topic .div3{width: calc(100% - 125px);}
+.topic .div3>div:first-child{color: #999;font-size: 13px;margin-bottom: 3px;}
+.topic a{color: #000;}
+.topic .div3>div:last-child a:last-child{font-size: 12px;padding: 0 6px;display: inline-block;height: 20px;line-height: 20px;color: #017E66;background: #EBF5F3;text-decoration: none;}
+.topic .div3>div:last-child a:last-child:hover{background: #017E66;color: #fff}
+.topic .div3>div:last-child a:first-child{font-size: 15px;}
+.topic .div4{position: absolute;top:10px;right: 0px;}

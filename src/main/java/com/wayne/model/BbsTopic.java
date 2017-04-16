@@ -11,23 +11,22 @@ import java.util.Date;
 @Entity
 @Table(name = "bbs_topic")
 public class BbsTopic extends BaseModel {
-    @Id
-	@GeneratedValue
+
 	private Integer id ;
 	private Integer emotion ;
 	private Integer isNice ;
 	private Integer isUp ;
-	private Integer moduleId ;
 	private Integer postCount ;
 	private Integer pv ;
 	private Integer replyCount ;
-	private Integer userId ;
 	private String content ;
 	private Date createTime ;
 
-    @Transient
-    private BbsUser user;
+    private BbsUser bbsUser;
+	private BbsModule bbsModule;
 
+	@Id
+	@GeneratedValue
 	public Integer getId() {
 		return id;
 	}
@@ -60,14 +59,6 @@ public class BbsTopic extends BaseModel {
 		this.isUp = isUp;
 	}
 
-	public Integer getModuleId() {
-		return moduleId;
-	}
-
-	public void setModuleId(Integer moduleId) {
-		this.moduleId = moduleId;
-	}
-
 	public Integer getPostCount() {
 		return postCount;
 	}
@@ -92,14 +83,6 @@ public class BbsTopic extends BaseModel {
 		this.replyCount = replyCount;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -116,12 +99,24 @@ public class BbsTopic extends BaseModel {
 		this.createTime = createTime;
 	}
 
-	public BbsUser getUser() {
-		return user;
+	//一对一关系 unique = true
+	@JoinColumn(name="user_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	public BbsUser getBbsUser() {
+		return bbsUser;
 	}
 
-	public void setUser(BbsUser user) {
-		this.user = user;
+	public void setBbsUser(BbsUser bbsUser) {
+		this.bbsUser = bbsUser;
 	}
 
+	@JoinColumn(name="module_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	public BbsModule getBbsModule() {
+		return bbsModule;
+	}
+
+	public void setBbsModule(BbsModule bbsModule) {
+		this.bbsModule = bbsModule;
+	}
 }
