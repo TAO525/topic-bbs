@@ -59,10 +59,10 @@ public class BbsServiceTest extends BaseServiceTest {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         List<BbsTopic> bbsTopicList = bbsTopicRepository.findByCreateTimeBetween(simpleDateFormat.parse("2016-01-01"), new Date());
-        List<Object[]> bbsTopicListByDate = bbsTopicRepository.getBbsTopicListByDate(simpleDateFormat.parse("2016-01-01"), new Date());
+//        List<Object[]> bbsTopicListByDate = bbsTopicRepository.getBbsTopicListByDate(simpleDateFormat.parse("2016-01-01"), new Date());
 //        List<IndexObject> bbsTopicListByDate2 = bbsTopicRepository.getBbsTopicListByDate2(simpleDateFormat.parse("2016-01-01"), new Date());
-        if (null != bbsTopicListByDate) {
-            logger.info(bbsTopicListByDate.get(0).toString());
+        if (null != bbsTopicList) {
+            logger.info(bbsTopicList.get(0).toString());
         }
     }
 

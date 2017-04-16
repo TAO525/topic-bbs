@@ -101,7 +101,7 @@ public class BbsTopic extends BaseModel {
 
 	//一对一关系 unique = true
 	@JoinColumn(name="user_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	public BbsUser getBbsUser() {
 		return bbsUser;
 	}
@@ -111,7 +111,7 @@ public class BbsTopic extends BaseModel {
 	}
 
 	@JoinColumn(name="module_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
 	public BbsModule getBbsModule() {
 		return bbsModule;
 	}
