@@ -17,4 +17,10 @@ public interface BbsService {
     Page<BbsTopic> getTopics(int pageNumber, int pageSize);
 
     List<IndexObject> getBbsTopicPostList(LuceneUtil luceneUtil, Date fileupdateDate);
+
+    void updateTopicNice(int isNice,int id);
+
+    void updateTopicUp(int up,int id);
+
+    void deleteTopic(int id);
 }

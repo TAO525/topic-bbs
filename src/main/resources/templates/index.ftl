@@ -16,12 +16,16 @@
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugin/layer.js"></script>
+    <script src="/js/main.js"></script>
 </head>
 <body>
 
-<a href="${ctxPath}/bbs/user/login.html">登录</a>
+<#--<a href="${ctxPath}/bbs/user/login.html">登录</a>
 |
-<a href="${ctxPath}/bbs/user/regist.html">注册</a>
+<a href="${ctxPath}/bbs/user/regist.html">注册</a>-->
+<#include "common/nav.ftl">
+
 <h4>${pagename!}</h4>
 <div id="post-list">
         <#list topics.content as topic>
@@ -45,19 +49,19 @@
                         <a href="javascript:;">
                             ${topic.bbsUser.userName}
                         </a>
-                        &nbsp;&nbsp;${topic.createTime}</div>
+                        &nbsp;&nbsp;${topic.niceDate}</div>
                     <div><a href="${ctxPath}/bbs/topic/${topic.id}-1.html">${topic.content}</a>&nbsp;&nbsp;<a href="${ctxPath}/bbs/topic/module/${topic.bbsModule.id}-1.html">${topic.bbsModule.name}</a></div>
                 </div>
+                <#if isAdmin?? && isAdmin>
+                    <div class="div4" data-topic=${topic.id}>
+                        <a href="javascript:;"  class="btn btn-default btn-xs nice-btn">精华</a>
+                        <a href="javascript:;"  class="btn btn-default btn-xs top-btn">置顶</a>
+                        <a href="javascript:;"  class="btn btn-default btn-xs del-btn">删除</a>
+                    </div>
+                </#if>
             </div>
         </#list>
 
-       <#-- @if(isAdmin){
-        <div class="div4" data-topic=${topic.id}>
-            <a href="javascript:;"  class="btn btn-default btn-xs nice-btn">精华</a>
-            <a href="javascript:;"  class="btn btn-default btn-xs top-btn">置顶</a>
-            <a href="javascript:;"  class="btn btn-default btn-xs del-btn">删除</a>
-        </div>
-        @}-->
 </div>
 
 <@paginator.page query= topics pageUrl="/bbs/index/" pageUrlParameter=""/>

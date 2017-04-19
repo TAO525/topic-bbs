@@ -23,7 +23,7 @@ public class HelloController {
 //    @Auth
     @RequestMapping("/hello")
     public ModelAndView say(){
-        ModelAndView index = new ModelAndView("hello");
+        ModelAndView index = new ModelAndView("hello1");
         return index;
     }
 

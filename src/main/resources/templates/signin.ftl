@@ -21,7 +21,7 @@
 
 <div class="container">
 
-    <form class="form-signin" action="${ctxPath}/bbs/user/login" onsubmit="return ajaxSubmit(this,'reload')">
+    <form class="form-signin" action="${ctxPath}/bbs/user/login" onsubmit="return ajaxSubmit(this)">
         <h2 class="form-signin-heading">Please sign in</h2>
         <div class="alert alert-danger alert-dismissable" id="tip"></div>
 

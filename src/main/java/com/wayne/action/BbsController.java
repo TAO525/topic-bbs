@@ -59,7 +59,7 @@ public class BbsController extends BaseController{
             luceneUtil.createDataIndexer(bbsContentList);
             //查询索引
             PageQuery<IndexObject> searcherKeywordPage = luceneUtil.searcherKeyword(keyword,Const.TOPIC_PAGE_SIZE, p);
-            view.setViewName("/lucene/index.html");
+            view.setViewName("/searchIndex");
             view.addObject("searcherPage", searcherKeywordPage);
             view.addObject("pagename", keyword);
             view.addObject("resultnum", searcherKeywordPage.getTotalRow());

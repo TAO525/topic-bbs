@@ -1,7 +1,6 @@
 package com.wayne.action;
 
 import com.alibaba.fastjson.JSONObject;
-import com.wayne.common.HashUtil;
 import com.wayne.common.WebUtils;
 import com.wayne.model.BbsUser;
 import com.wayne.service.BbsUserService;
@@ -49,7 +48,6 @@ public class LoginController extends BaseController{
         if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(password)){
             result.put("msg","请输入正确的内容！");
         }else{
-            password = HashUtil.generatePwd(password);
             BbsUser user = bbsUserService.getUserAccount(userName, password);
             if(user==null){
                 result.put("msg","用户不存在");
@@ -88,8 +86,6 @@ public class LoginController extends BaseController{
         }else if(bbsUserService.hasUser(user.getUserName())){
             result.put("msg", "用户已经存在");
         }else{
-            String password = HashUtil.generatePwd(user.getPassword());
-            user.setPassword(password);
             user.setBalance(10);
             user.setLevel(1);
             user.setScore(10);
@@ -99,6 +95,17 @@ public class LoginController extends BaseController{
             result.put("msg", "/bbs/index");
         }
         return result;
+    }
+
+    /**
+     * 登出方法改为ajax方式登出
+     * @param request
+     * @param response
+     */
+    @ResponseBody
+    @PostMapping("/logout")
+    public void  logout(HttpServletRequest request,HttpServletResponse response){
+        WebUtils.logoutUser(request,response);
     }
 
 }

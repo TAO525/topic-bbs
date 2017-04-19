@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class WebUtils {
 
-
-
 	/**
 	 * 用户登陆状态维持
 	 * 
@@ -130,6 +128,40 @@ public class WebUtils {
 			ip = request.getRemoteAddr();
 		}
 		return ip;
+	}
+
+
+	/**
+	 * 退出即删除用户信息
+	 */
+	public static void logoutUser(HttpServletRequest request,HttpServletResponse response) {
+		request.getSession().removeAttribute("user");
+		removeCookie(response, Const.USER_COOKIE_KEY);
+	}
+
+
+	/**
+	 *
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public static boolean isAdmin(HttpServletRequest request,HttpServletResponse response) {
+		BbsUser user = currentUser(request,  response);
+		if(user==null){
+			throw new RuntimeException("未登陆用户");
+		}
+		return user.getUserName().equals("admin");
+
+	}
+
+	private static BbsUser currentUser(HttpServletRequest request, HttpServletResponse response) {
+
+		BbsUser user = (BbsUser)request.getSession().getAttribute("user");
+		if(user!=null){
+			return user;
+		}
+		return null;
 	}
 
 }

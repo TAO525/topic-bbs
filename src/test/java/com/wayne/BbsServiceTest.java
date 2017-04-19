@@ -75,4 +75,14 @@ public class BbsServiceTest extends BaseServiceTest {
             logger.info(bbsTopicListByDateistByDate.get(0).toString());
         }*/
     }
+
+    @Test
+    public void test_updateNice(){
+        bbsService.updateTopicNice(1,76);
+    }
+
+    @Test
+    public void test_updateDel(){
+        bbsService.deleteTopic(76);
+    }
 }

@@ -9,11 +9,11 @@ import com.wayne.model.BbsPost;
 import com.wayne.model.BbsTopic;
 import com.wayne.service.BbsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -34,7 +34,6 @@ public class BbsServiceImpl implements BbsService {
     private BbsTopicRepository topicDao;
 
     @Override
-    @Cacheable("TOPIC")
     public Page<BbsTopic> getTopics(int pageNumber,int pageSize) {
         PageRequest request = this.buildPageRequest(pageNumber,pageSize);
         Page<BbsTopic> sourceCodes= this.topicDao.findAll(request);
@@ -53,8 +52,8 @@ public class BbsServiceImpl implements BbsService {
     public List<IndexObject> getBbsTopicPostList(LuceneUtil luceneUtil, Date fileupdateDate){
         List<IndexObject>  indexObjectsList = new ArrayList<>();
         //获取主题和回复最后的提交时间
-        List<IndexObject> bbsTopics = null;
-        List<IndexObject> bbsPosts = null;
+        List<IndexObject> bbsTopics = new ArrayList<>();
+        List<IndexObject> bbsPosts = new ArrayList<>();
         try {
 //            Map<String,Date> lastPostDate = postDao.getLastPostDate();
             Date lastPostDate = postDao.getLastPostDate();
@@ -100,5 +99,23 @@ public class BbsServiceImpl implements BbsService {
     @Override
     public BbsTopic getById(Integer id) {
         return topicDao.findOne(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateTopicNice(int isNice,int id) {
+        topicDao.updateTopicNice(isNice,id);
+    }
+
+    @Override
+    @Transactional
+    public void updateTopicUp(int up, int id) {
+        topicDao.updateTopicUp(up,id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTopic(int id) {
+        topicDao.deleteById(id);
     }
 }
