@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,7 +66,13 @@ public class BbsServiceImpl implements BbsService {
                 fileupdateDate = luceneUtil.getDateFormat().parse(luceneUtil.getDateFormat().format(fileupdateDate));
 
             if (fileupdateDate == null || (topiclastupdate != null && luceneUtil.dateCompare(topiclastupdate, fileupdateDate))) {
-                List<BbsTopic> topicsPo = topicDao.findByCreateTimeBetween(fileupdateDate, topiclastupdate);
+                List<BbsTopic> topicsPo;
+                if(null==fileupdateDate){
+                    //由于不能传入null 并转化成空字符 所以插入个默认初始时间
+                    topicsPo = topicDao.findByCreateTimeBetween(getStartDate(),topiclastupdate);
+                }else{
+                    topicsPo = topicDao.findByCreateTimeBetween(fileupdateDate, topiclastupdate);
+                }
                 if (null != topicsPo && !topicsPo.isEmpty()) {
                     for (BbsTopic item : topicsPo) {
                         IndexObject indexObject = new IndexObject();
@@ -76,13 +83,18 @@ public class BbsServiceImpl implements BbsService {
                 }
             }
             if (fileupdateDate == null || (postlastupdate != null && luceneUtil.dateCompare(postlastupdate, fileupdateDate))) {
-                List<BbsPost> postPos = postDao.findByCreateTimeBetween(fileupdateDate, postlastupdate);
+                List<BbsPost> postPos;
+                if(null==fileupdateDate){
+                    postPos = postDao.findByCreateTimeBetween(getStartDate(),topiclastupdate);
+                }else{
+                    postPos = postDao.findByCreateTimeBetween(fileupdateDate, postlastupdate);
+                }
                 if (null != postPos && !postPos.isEmpty()) {
                     for (BbsPost item : postPos) {
                         IndexObject indexObject = new IndexObject();
                         indexObject.setTopicId(String.valueOf(item.getTopicId()));
                         indexObject.setContent(item.getContent());
-                        bbsTopics.add(indexObject);
+                        bbsPosts.add(indexObject);
                     }
                 }
             }
@@ -94,6 +106,16 @@ public class BbsServiceImpl implements BbsService {
 //		System.out.println("================");
 //		System.out.println(JSONObject.toJSONString(indexObjectsList));
         return indexObjectsList;
+    }
+
+    private Date getStartDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            return sdf.parse("2000-01-01 00:00:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }
 
     @Override
