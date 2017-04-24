@@ -2,7 +2,6 @@ package com.wayne.common.lucene;
 
 import com.wayne.common.lucene.entity.IKAnalyzer5x;
 import com.wayne.common.lucene.entity.IndexObject;
-import com.wayne.model.PageQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -23,6 +22,9 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -138,11 +140,11 @@ public class LuceneUtil {
      * @param pageSize 页面大小
      * @param currentPage 当前页
      */
-    public PageQuery<IndexObject> searcherKeyword(String keyword, Integer pageSize, Integer currentPage){
+    public Page<IndexObject> searcherKeyword(String keyword, Integer pageSize, Integer currentPage){
     	if(keyword == null) throw new RuntimeException("关键字不能为空");
     	if(pageSize == 0)pageSize = 10;
 		IndexReader indexReader = null;
-		PageQuery<IndexObject> pageQuery = null;
+		Page<IndexObject> pageQuery = null;
 		List<IndexObject> searchResults = new ArrayList<>();
 		try {
 			// 打开索引库
@@ -186,13 +188,14 @@ public class LuceneUtil {
 //			    System.out.println("=======================");
 			}
 
-			pageQuery = new PageQuery<>(currentPage, null);
-			pageQuery.setPageSize(pageSize);
+			/*pageQuery.setPageSize(pageSize);
 			pageQuery.setTotalRow(topDocs.totalHits);
 			Collections.sort(searchResults);
-			pageQuery.setList(searchResults);
-			
-			
+			pageQuery.setList(searchResults);*/
+			Collections.sort(searchResults);
+			PageRequest pageRequest = new PageRequest(currentPage-1, pageSize);
+			pageQuery = new PageImpl<>(searchResults,pageRequest,topDocs.totalHits);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {

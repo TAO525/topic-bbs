@@ -4,7 +4,6 @@ import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
 import com.wayne.config.Const;
 import com.wayne.model.BbsTopic;
-import com.wayne.model.PageQuery;
 import com.wayne.service.BbsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -58,11 +57,12 @@ public class BbsController extends BaseController{
             //创建索引
             luceneUtil.createDataIndexer(bbsContentList);
             //查询索引
-            PageQuery<IndexObject> searcherKeywordPage = luceneUtil.searcherKeyword(keyword,Const.TOPIC_PAGE_SIZE, p);
+            Page<IndexObject> searcherKeywordPage = luceneUtil.searcherKeyword(keyword,Const.TOPIC_PAGE_SIZE, p);
             view.setViewName("/searchIndex");
             view.addObject("searcherPage", searcherKeywordPage);
             view.addObject("pagename", keyword);
-            view.addObject("resultnum", searcherKeywordPage.getTotalRow());
+            view.addObject("resultnum", searcherKeywordPage.getTotalElements());
+            view.addObject("keyword",keyword);
         }
         return view;
     }

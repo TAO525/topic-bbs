@@ -20,17 +20,15 @@
 </head>
 <body>
 
-<#--<a href="${ctxPath}/bbs/user/login.html">登录</a>
-|
-<a href="${ctxPath}/bbs/user/regist.html">注册</a>-->
+
 <#include "common/nav.ftl">
 
 <h5><span class="result">${pagename!} </span>的搜索结果：<span class="result">${resultnum!}</span> 条</h5>
 <hr/>
 <div id="searcher-list">
-    <#list searcherPage.list! as searcher>
+    <#list searcherPage.content! as searcher>
         <div class="searcher">
-            <div>匹配度：<small>${searcher.score!}</small></div>
+            <div>匹配度：<small>#{searcher.score!;M2}</small></div>
             <a href="${ctxPath}/bbs/topic/${searcher.topicId!}-1.html">
             ${searcher.content!}
             </a>
@@ -38,7 +36,7 @@
     </#list>
 </div>
 
-<#--<@paginator.page query= topics pageUrl="/bbs/index/" pageUrlParameter=""/>-->
+<@paginator.page query= searcherPage pageUrl="/bbs/index/" pageUrlParameter="?keyword=${keyword!}"/>
 
 </body>
 </html>

@@ -12,6 +12,7 @@ import java.io.IOException;
 import static com.wayne.action.BaseController.CODE_NAME;
 
 /**
+ * 验证码
  * @Author TAO
  * @Date 2017/4/4 20:51
  */
