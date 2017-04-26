@@ -17,14 +17,14 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="${ctxPath}/bbs/index/1.html">首页综合</a></li>
-            <#-- <li class="dropdown">
+            <li class="dropdown">
                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">板块 <span class="caret"></span></a>
                  <ul class="dropdown-menu" role="menu">
-                     @for(moudle in moduleList){
-                     <li><a href="${ctxPath}/bbs/topic/module/${moudle.id}-1.html">${moudle.name} </a></li>
-                     @}
+                     <#list moduleList! as module>
+                        <li><a href="${ctxPath}/bbs/topic/module/${module.id!}-1.html">${module.name!} </a></li>
+                     </#list>
                  </ul>
-             </li>-->
+            </li>
             </ul>
             <form class="navbar-form navbar-left">
                 <div class="form-group">

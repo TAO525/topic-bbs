@@ -21,9 +21,6 @@
 </head>
 <body>
 
-<#--<a href="${ctxPath}/bbs/user/login.html">登录</a>
-|
-<a href="${ctxPath}/bbs/user/regist.html">注册</a>-->
 <#include "common/nav.ftl">
 
 <h4>${pagename!}</h4>
@@ -63,8 +60,11 @@
         </#list>
 
 </div>
-
-<@paginator.page query= topics pageUrl="/bbs/index/" pageUrlParameter=""/>
+<#if pageUrl??>
+    <@paginator.page query= topics pageUrl="${pageUrl}" pageUrlParameter=""/>
+    <#else >
+    <@paginator.page query= topics pageUrl="/bbs/index/" pageUrlParameter=""/>
+</#if>
 
 </body>
 </html>

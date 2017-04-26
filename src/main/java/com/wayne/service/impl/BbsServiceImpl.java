@@ -3,18 +3,24 @@ package com.wayne.service.impl;
 
 import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
+import com.wayne.dao.BbsModuleRepository;
 import com.wayne.dao.BbsPostRepository;
+import com.wayne.dao.BbsReplyRepository;
 import com.wayne.dao.BbsTopicRepository;
+import com.wayne.model.BbsModule;
 import com.wayne.model.BbsPost;
 import com.wayne.model.BbsTopic;
 import com.wayne.service.BbsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +39,12 @@ public class BbsServiceImpl implements BbsService {
 
     @Autowired
     private BbsTopicRepository topicDao;
+
+    @Autowired
+    private BbsReplyRepository replyDao;
+
+    @Autowired
+    private BbsModuleRepository moduleDao;
 
     @Override
     public Page<BbsTopic> getTopics(int pageNumber,int pageSize) {
@@ -139,5 +151,37 @@ public class BbsServiceImpl implements BbsService {
     @Transactional
     public void deleteTopic(int id) {
         topicDao.deleteById(id);
+        postDao.deleteByTopicId(id);
+        replyDao.deleteByTopicId(id);
+    }
+
+    @Override
+    @Cacheable("ModuleList")
+    public List<BbsModule> getModuleList() {
+        return moduleDao.findAll();
+    }
+
+    @Override
+    public Page<BbsTopic> getTopicsByModuleId(Integer moduleId, int pageNumber, int pageSize) {
+        PageRequest request = this.buildPageRequest(pageNumber,pageSize);
+
+        Specification<BbsTopic> specification = new Specification<BbsTopic>() {
+            /**
+             *
+             * @param *root 代表查询的实体类
+             * @param criteriaQuery 可以从中获得root 对象，即告知JPA criteria 查询要查询哪一个实体类
+             *                      还可以来添加查询条件，还可以结合EntityManager 对象得到最终查询的TypeQuery对象
+             * @param *criteriaBuilder 用于创建crite 相关对象的工厂
+             * @return *Predicate 代表一个查询条件
+             */
+            @Override
+            public Predicate toPredicate(Root<BbsTopic> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                Path path = root.get("bbsModule").get("id");
+                Predicate predicate = criteriaBuilder.equal(path,moduleId);
+                return predicate;
+            }
+        };
+
+        return topicDao.findAll(specification,request);
     }
 }

@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date 2017/3/23 18:21
  */
 public interface BbsReplyRepository extends JpaRepository<BbsReply, Integer> {
-    
+    void deleteByTopicId(Integer id);
 }

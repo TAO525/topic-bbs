@@ -11,5 +11,5 @@
 <#if (user.id)?? && (user.id == 1) >
         <#assign isAdmin = true/>
     <#else>
-        <#assign isAdmin = true/>
+        <#assign isAdmin = false/>
 </#if>

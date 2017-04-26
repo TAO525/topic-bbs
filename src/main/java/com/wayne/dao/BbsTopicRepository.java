@@ -2,6 +2,7 @@ package com.wayne.dao;
 
 import com.wayne.model.BbsTopic;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @Author TAO
  * @Date 2017/3/23 18:21
  */
-public interface BbsTopicRepository extends JpaRepository<BbsTopic, Integer> {
+public interface BbsTopicRepository extends JpaRepository<BbsTopic, Integer>,JpaSpecificationExecutor<BbsTopic> {
     //利用nativesql
     @Query(value = "SELECT max(p.create_time) as lastupdate FROM bbs_topic p",nativeQuery = true)
     Date getLastTopicDate();

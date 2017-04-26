@@ -85,4 +85,10 @@ public class BbsServiceTest extends BaseServiceTest {
     public void test_updateDel(){
         bbsService.deleteTopic(76);
     }
+
+    @Test
+    public void test_getTopicsByModuleId(){
+        Page<BbsTopic> topicsByModuleId = bbsService.getTopicsByModuleId(2, 1, 10);
+        logger.info(topicsByModuleId.toString());
+    }
 }

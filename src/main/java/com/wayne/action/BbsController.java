@@ -3,11 +3,13 @@ package com.wayne.action;
 import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
 import com.wayne.config.Const;
+import com.wayne.model.BbsModule;
 import com.wayne.model.BbsTopic;
 import com.wayne.service.BbsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +33,11 @@ public class BbsController extends BaseController{
 
     @Resource
     private BbsService bbsService;
+
+    @ModelAttribute("moduleList")
+    public List<BbsModule> moduleList(){
+        return bbsService.getModuleList();
+    }
 
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request){
@@ -66,4 +73,20 @@ public class BbsController extends BaseController{
         }
         return view;
     }
+
+    @RequestMapping("/topic/module/{id}-{p}.html")
+    public ModelAndView module(@PathVariable final int id, @PathVariable int p){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("index");
+        Page<BbsTopic> topics = bbsService.getTopicsByModuleId(id, p, Const.TOPIC_PAGE_SIZE);
+
+        if(topics.getContent().size() >0){
+            BbsTopic bbsTopic = (BbsTopic) topics.getContent().get(0);
+            view.addObject("pagename",bbsTopic.getBbsModule().getName());
+        }
+        view.addObject("topics", topics);
+        view.addObject("pageUrl","/bbs/topic/module/"+id+"-");
+        return view;
+    }
+
 }
