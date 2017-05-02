@@ -2,6 +2,7 @@ package com.wayne.dao;
 
 import com.wayne.model.BbsPost;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
@@ -18,10 +19,14 @@ public interface BbsPostRepository extends JpaRepository<BbsPost, Integer> {
 
     List<BbsPost> findByCreateTimeBetween(Date fileupdateDate, Date topiclastupdate);
 
-    @Query("select b from BbsPost b where b.topicId = ?1 order by b.createTime desc ")
+    @Query("select b from BbsPost b where b.topicId = ?1 order by b.createTime asc ")
     List<BbsPost> getByTopicId(int topicId);
 
     void deleteByTopicId(Integer id);
+
+    @Query("update BbsPost b set b.content = ?2,b.updateTime = current_timestamp where b.id = ?1")
+    @Modifying
+    void updatePostContent(Integer id, String content);
 
     /* 这里名字对了但是类型有错 所以方法不行 */
    /* @Query(value = "SELECT new com.wayne.common.lucene.entity.IndexObject(p.topicId,p.content) FROM BbsPost p WHERE create_time BETWEEN ?1 AND ?2")

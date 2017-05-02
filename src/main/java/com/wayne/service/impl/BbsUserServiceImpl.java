@@ -68,4 +68,6 @@ public class BbsUserServiceImpl implements BbsUserService {
         user.setLevel(ScoreUtil.getLevel(score));
         bbsUserRepository.save(user);
     }
+
+
 }

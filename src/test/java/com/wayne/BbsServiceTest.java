@@ -4,6 +4,7 @@ import com.wayne.dao.BbsPostRepository;
 import com.wayne.dao.BbsTopicRepository;
 import com.wayne.model.BbsPost;
 import com.wayne.model.BbsTopic;
+import com.wayne.model.BbsUser;
 import com.wayne.service.BbsService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +103,19 @@ public class BbsServiceTest extends BaseServiceTest {
     @Test
     public void test_deletePosts(){
          bbsService.deletePost(224);
+    }
+
+    @Test
+    public void test_savePosts(){
+        BbsPost bbsPost = new BbsPost();
+        BbsUser user = new BbsUser();
+        user.setId(1);
+        bbsPost.setBbsUser(user);
+        bbsPost.setTopicId(61);
+        bbsPost.setContent("aaaaaaaaaaaaaaaaaaaaaaa");
+        bbsPost.setCreateTime(new Date());
+        bbsPost.setHasReply(0);
+        bbsPost.setUpdateTime(new Date());
+        bbsService.savePost(bbsPost);
     }
 }

@@ -9,8 +9,10 @@ import com.wayne.dao.BbsReplyRepository;
 import com.wayne.dao.BbsTopicRepository;
 import com.wayne.model.BbsModule;
 import com.wayne.model.BbsPost;
+import com.wayne.model.BbsReply;
 import com.wayne.model.BbsTopic;
 import com.wayne.service.BbsService;
+import com.wayne.service.BbsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -45,6 +47,9 @@ public class BbsServiceImpl implements BbsService {
 
     @Autowired
     private BbsModuleRepository moduleDao;
+
+    @Autowired
+    private BbsUserService bbsUserService;
 
     @Override
     public Page<BbsTopic> getTopics(int pageNumber,int pageSize) {
@@ -206,5 +211,24 @@ public class BbsServiceImpl implements BbsService {
     public void deletePost(int id) {
         postDao.delete(id);
         replyDao.deleteByPostId(id);
+    }
+
+    @Override
+    @Transactional
+    public void savePost(BbsPost bbsPost) {
+        postDao.save(bbsPost);
+        bbsUserService.addPostScore(bbsPost.getBbsUser().getId());
+        topicDao.increasePostCount(bbsPost.getTopicId());
+    }
+
+    @Override
+    @Transactional
+    public void updatePostContent(BbsPost bbsPost) {
+        postDao.updatePostContent(bbsPost.getId(),bbsPost.getContent());
+    }
+
+    @Override
+    public void saveReply(BbsReply bbsReply) {
+        replyDao.save(bbsReply);
     }
 }

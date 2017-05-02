@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -106,6 +107,48 @@ public class BbsAdminController extends BaseController{
             bbsService.deletePost(id);
             result.put("err", 0);
             result.put("msg", "success");
+        }
+        return result;
+    }
+
+
+    @RequestMapping("/post/edit/{id}.html")
+    public ModelAndView editPost(ModelAndView view, @PathVariable int id, HttpServletRequest request, HttpServletResponse response){
+        view.setViewName("postEdit");
+        BbsPost post = bbsService.getPostById(id);
+        Integer tipicId = post.getTopicId();
+        view.addObject("post",post);
+        view.addObject("topic", bbsService.getById(tipicId));
+        return view;
+    }
+
+
+    /**
+     * ajax方式编辑内容
+     * @param view
+     * @param post
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/post/update")
+    public JSONObject updatePost(ModelAndView view, BbsPost post,HttpServletRequest request, HttpServletResponse response){
+        JSONObject result = new JSONObject();
+        result.put("err", 1);
+        if(post.getContent().length()<10){
+            result.put("msg", "输入的内容太短，请重新编辑！");
+        }else{
+//            BbsPost db = sql.unique(BbsPost.class, post.getId());
+            BbsPost db = bbsService.getPostById(post.getId());
+            if(canUpdatePost(db,request,response)){
+                db.setContent(post.getContent());
+                bbsService.updatePostContent(db);
+                result.put("msg", "/bbs/topic/"+db.getTopicId()+"-1.html");
+                result.put("err", 0);
+            }else{
+                result.put("msg", "不是自己发表的内容无法编辑！");
+            }
         }
         return result;
     }

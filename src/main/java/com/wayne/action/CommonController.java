@@ -5,6 +5,7 @@ import com.wayne.common.WebUtils;
 import com.wayne.model.BbsUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,7 +84,7 @@ public class CommonController {
                     fileout.mkdirs();
                 }
                 FileCopyUtils.copy(file.getBytes(), new File(filePaths+ newName));
-                map.put("file_path", request.getContextPath()+"/bbs/showPic/" + newName);
+                map.put("file_path", request.getContextPath()+"/bbs/common/showPic/" + newName);
                 map.put("msg","图片上传成功！");
                 map.put("success", true);
                 return map;
@@ -94,6 +96,28 @@ public class CommonController {
             map.put("msg", "图片上传出错！");
         }
         return map;
+    }
+
+    /**
+     * 用于富文本编辑器找到图片路径
+     * @param path
+     * @param ext
+     * @param request
+     * @param response
+     */
+    @RequestMapping("/showPic/{path}.{ext}")
+    public void showPic(@PathVariable String path, @PathVariable String ext, HttpServletRequest request, HttpServletResponse response){
+        String rootPath = filePath;
+
+        try {
+            String filePath = rootPath + "/upload/" + path+"."+ext;
+            FileInputStream fins = new FileInputStream(filePath);
+            response.setContentType("image/jpeg");
+            FileCopyUtils.copy(fins, response.getOutputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ;
     }
 
 }
