@@ -21,6 +21,7 @@ public class BbsTopic extends BaseModel {
 	private Integer replyCount ;
 	private String content ;
 	private Date createTime ;
+	private Integer moduleId;
 
     private BbsUser bbsUser;
 	private BbsModule bbsModule;
@@ -119,6 +120,16 @@ public class BbsTopic extends BaseModel {
 	public void setBbsModule(BbsModule bbsModule) {
 		this.bbsModule = bbsModule;
 	}
+
+	@Transient
+	public Integer getModuleId() {
+		return moduleId;
+	}
+
+	public void setModuleId(Integer moduleId) {
+		this.moduleId = moduleId;
+	}
+
 
 	/*@Transient
 	public String getNiceDate() {

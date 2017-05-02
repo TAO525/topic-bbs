@@ -2,10 +2,7 @@ package com.wayne.service;
 
 import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
-import com.wayne.model.BbsModule;
-import com.wayne.model.BbsPost;
-import com.wayne.model.BbsReply;
-import com.wayne.model.BbsTopic;
+import com.wayne.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -77,4 +74,12 @@ public interface BbsService {
      * @param bbsReply
      */
     void saveReply(BbsReply bbsReply);
+
+    /**
+     * 保存话题
+     * @param bbsTopic
+     * @param bbsPost
+     * @param bbsUser
+     */
+    void saveTopic(BbsTopic bbsTopic, BbsPost bbsPost, BbsUser bbsUser);
 }

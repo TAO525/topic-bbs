@@ -39,7 +39,7 @@
                 <li><a href="${ctxPath}/bbs/user/regist.html" data-toggle="modal"><i class="fa fa-user-plus"></i> 注册</a></li>
             </#if>
             <#if user??>
-                <li><a href="/bbs/bbs/topic/add.html"><i class="fa fa-plus"></i> 发帖</a></li>
+                <li><a href="/bbs/topic/add.html"><i class="fa fa-plus"></i> 发帖</a></li>
                 <li class="dropdown">
                 <#--@ var mcount = c.myMessageCount(_user.id);-->
                     <#assign mcount = 0/>

@@ -109,6 +109,56 @@ public class BbsController extends BaseController{
         return view;
     }
 
+
+    /**
+     * 文章发布改为Ajax方式提交更友好
+     * @param topic
+     * @param post
+     * @param title
+     * @param postContent
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/topic/save")
+    public JSONObject saveTopic(BbsTopic topic, BbsPost post, String title, String postContent,HttpServletRequest request, HttpServletResponse response){
+        //@TODO， 防止频繁提交
+        BbsUser user = WebUtils.currentUser(request, response);
+//		Date lastPostTime = bbsService.getLatestPost(user.getId());
+//		long now = System.currentTimeMillis();
+//		long temp = lastPostTime.getTime();
+//		if(now-temp<1000*10){
+//			//10秒之内的提交都不处理
+//			throw new RuntimeException("提交太快，处理不了，上次提交是 "+lastPostTime);
+//		}
+        JSONObject result = new JSONObject();
+        result.put("err", 1);
+        if(user==null){
+            result.put("msg", "请先登录后再继续！");
+        }else if(title.length()<10||postContent.length()<10){
+            //客户端需要完善
+            result.put("msg", "标题或内容太短！");
+        }else{
+            BbsModule module = new BbsModule();
+            module.setId(topic.getModuleId());
+            topic.setIsNice(0);
+            topic.setIsUp(0);
+            topic.setPv(1);
+            topic.setPostCount(1);
+            topic.setReplyCount(0);
+            post.setHasReply(0);
+            topic.setContent(title);
+            post.setContent(postContent);
+            topic.setBbsModule(module);
+            bbsService.saveTopic(topic, post, user);
+
+            result.put("err", 0);
+            result.put("msg", "/bbs/topic/"+topic.getId()+"-1.html");
+        }
+        return result;
+    }
+
     @ResponseBody
     @RequestMapping("/post/save")
     public JSONObject savePost(BbsPost post, HttpServletRequest request, HttpServletResponse response){
@@ -176,6 +226,12 @@ public class BbsController extends BaseController{
 
         }
         return result;
+    }
+
+    @RequestMapping("/topic/add.html")
+    public ModelAndView addTopic(ModelAndView view){
+        view.setViewName("post");
+        return view;
     }
 
 }

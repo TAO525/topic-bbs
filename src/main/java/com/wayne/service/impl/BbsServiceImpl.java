@@ -7,10 +7,7 @@ import com.wayne.dao.BbsModuleRepository;
 import com.wayne.dao.BbsPostRepository;
 import com.wayne.dao.BbsReplyRepository;
 import com.wayne.dao.BbsTopicRepository;
-import com.wayne.model.BbsModule;
-import com.wayne.model.BbsPost;
-import com.wayne.model.BbsReply;
-import com.wayne.model.BbsTopic;
+import com.wayne.model.*;
 import com.wayne.service.BbsService;
 import com.wayne.service.BbsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -230,5 +227,27 @@ public class BbsServiceImpl implements BbsService {
     @Override
     public void saveReply(BbsReply bbsReply) {
         replyDao.save(bbsReply);
+        bbsUserService.addReplayScore(bbsReply.getBbsUser().getId());
+    }
+
+    @Override
+    @Transactional
+    public void saveTopic(BbsTopic bbsTopic, BbsPost bbsPost, BbsUser bbsUser) {
+        bbsTopic.setCreateTime(new Date());
+        bbsTopic.setBbsUser(bbsUser);
+        BbsTopic topic = topicDao.save(bbsTopic);
+        bbsPost.setBbsUser(bbsUser);
+        bbsPost.setTopicId(topic.getId());
+        bbsPost.setCreateTime(new Date());
+        postDao.save(bbsPost);
+        bbsUserService.addTopicScore(bbsUser.getId());
+       /* topic.setUserId(user.getId());
+        topic.setCreateTime(new Date());
+        topicDao.insert(topic, true);
+        post.setUserId(user.getId());
+        post.setTopicId(topic.getId());
+        post.setCreateTime(new Date());
+        postDao.insert(post);
+        gitUserService.addTopicScore(user.getId());*/
     }
 }
