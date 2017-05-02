@@ -39,7 +39,7 @@
             <#if post_index == 0>
             <span class="label label-default">${topic.pv}</span>
             </#if>
-            <#--<#if user??>-->
+            <#if user??>
                 <div class="btn-group btn-group-xs pull-right">
                     <#if (isAdmin) || (user.id == post.bbsUser.id) >
                         <a class="btn btn-default" href="${ctxPath}/bbs/admin/post/edit/${post.id}.html"><i class="fa fa-edit"></i> 编辑</a>
@@ -47,7 +47,7 @@
                     </#if>
                     <a class="btn btn-default" href="javascript:;" onclick="showReplyDialog('${post.id!}','${topic.id!}')"><i class="fa fa-reply"></i> 回复</a>
                 </div>
-            <#--</#if>-->
+            </#if>
         </div>
         <div class="panel-body">${post.content}</div>
         <#if post.replys?size != 0>
