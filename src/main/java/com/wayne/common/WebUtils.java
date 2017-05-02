@@ -155,7 +155,7 @@ public class WebUtils {
 
 	}
 
-	private static BbsUser currentUser(HttpServletRequest request, HttpServletResponse response) {
+	public static BbsUser currentUser(HttpServletRequest request, HttpServletResponse response) {
 
 		BbsUser user = (BbsUser)request.getSession().getAttribute("user");
 		if(user!=null){

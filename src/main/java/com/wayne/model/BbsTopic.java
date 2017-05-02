@@ -1,7 +1,6 @@
 package com.wayne.model;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -12,8 +11,6 @@ import java.util.Date;
 @Entity
 @Table(name = "bbs_topic")
 public class BbsTopic extends BaseModel {
-
-	private final static SimpleDateFormat MY_DATE_FORMAT = new SimpleDateFormat("yyyy年MM月dd日");
 
 	private Integer id ;
 	private Integer emotion ;
@@ -123,7 +120,7 @@ public class BbsTopic extends BaseModel {
 		this.bbsModule = bbsModule;
 	}
 
-	@Transient
+	/*@Transient
 	public String getNiceDate() {
 		Date date = this.createTime;
 		if (null == date) return "";
@@ -142,5 +139,5 @@ public class BbsTopic extends BaseModel {
 			result = MY_DATE_FORMAT.format(date);
 		}
 		return result;
-	}
+	}*/
 }

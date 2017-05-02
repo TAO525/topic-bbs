@@ -33,6 +33,10 @@ public interface BbsTopicRepository extends JpaRepository<BbsTopic, Integer>,Jpa
     @Query("update BbsTopic p set p.isUp = ?1 where p.id = ?2")
     void updateTopicUp(int up,int id);
 
+    @Modifying
+    @Query("update BbsTopic p set p.pv = p.pv +1 where p.id = ?1")
+    void increasePv(int id);
+
     void deleteById(int id);
 
 

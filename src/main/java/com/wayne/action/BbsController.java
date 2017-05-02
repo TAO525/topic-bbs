@@ -4,6 +4,7 @@ import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
 import com.wayne.config.Const;
 import com.wayne.model.BbsModule;
+import com.wayne.model.BbsPost;
 import com.wayne.model.BbsTopic;
 import com.wayne.service.BbsService;
 import org.apache.commons.lang3.StringUtils;
@@ -89,4 +90,23 @@ public class BbsController extends BaseController{
         return view;
     }
 
+
+    @RequestMapping("/topic/{id}-{p}.html")
+    public ModelAndView topic(@PathVariable final int id, @PathVariable int p){
+        ModelAndView view = new  ModelAndView();
+        view.setViewName("detail");
+        List<BbsPost> posts = bbsService.getPostByTopicId(id);
+        /*PageQuery query = new PageQuery(p, new HashMap(){{put("topicId", id);}});
+        bbsService.getPosts(query);
+        view.addObject("postPage", query);
+        BbsTopic topic = bbsService.getTopic(id);
+        topic.setPv(topic.getPv() + 1);
+        sql.updateById(topic);
+        view.addObject("topic", topic);*/
+        bbsService.increasePv(id);
+        BbsTopic topic = bbsService.getById(id);
+        view.addObject("posts",posts);
+        view.addObject("topic",topic);
+        return view;
+    }
 }

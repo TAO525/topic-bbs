@@ -184,4 +184,27 @@ public class BbsServiceImpl implements BbsService {
 
         return topicDao.findAll(specification,request);
     }
+
+    @Override
+    @Transactional
+    public void increasePv(int id) {
+        topicDao.increasePv(id);
+    }
+
+    @Override
+    public List<BbsPost> getPostByTopicId(int topicId) {
+        return postDao.getByTopicId(topicId);
+    }
+
+    @Override
+    public BbsPost getPostById(int postId) {
+        return postDao.findOne(postId);
+    }
+
+    @Override
+    @Transactional
+    public void deletePost(int id) {
+        postDao.delete(id);
+        replyDao.deleteByPostId(id);
+    }
 }

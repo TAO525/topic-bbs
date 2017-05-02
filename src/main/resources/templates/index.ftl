@@ -46,7 +46,7 @@
                         <a href="javascript:;">
                             ${topic.bbsUser.userName}
                         </a>
-                        &nbsp;&nbsp;${topic.niceDate}</div>
+                        &nbsp;&nbsp;${printTime(topic.createTime)}</div>
                     <div><a href="${ctxPath}/bbs/topic/${topic.id}-1.html">${topic.content}</a>&nbsp;&nbsp;<a href="${ctxPath}/bbs/topic/module/${topic.bbsModule.id}-1.html">${topic.bbsModule.name}</a></div>
                 </div>
                 <#if isAdmin?? && isAdmin>

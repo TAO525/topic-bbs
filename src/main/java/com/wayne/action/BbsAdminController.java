@@ -2,7 +2,9 @@ package com.wayne.action;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wayne.common.WebUtils;
+import com.wayne.model.BbsPost;
 import com.wayne.model.BbsTopic;
+import com.wayne.model.BbsUser;
 import com.wayne.service.BbsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,4 +94,37 @@ public class BbsAdminController extends BaseController{
         return result;
     }
 
+    @ResponseBody
+    @PostMapping("/post/delete/{id}")
+    public JSONObject deletePost(@PathVariable int id,HttpServletRequest request, HttpServletResponse response){
+        JSONObject result = new JSONObject();
+        BbsPost bbsPost = bbsService.getPostById(id);
+        if(!canUpdatePost(bbsPost,request,response)){
+            result.put("err", 1);
+            result.put("msg", "不是自己发表的内容无法删除");
+        }else{
+            bbsService.deletePost(id);
+            result.put("err", 0);
+            result.put("msg", "success");
+        }
+        return result;
+    }
+
+
+    private boolean canUpdatePost(BbsPost post, HttpServletRequest request, HttpServletResponse response){
+
+        BbsUser user = WebUtils.currentUser(request, response);
+        if(user==null){
+            return false;
+        }
+        if(post.getBbsUser().getId().equals(user.getId())){
+            return true ;
+        }
+        //如果是admin
+        if(user.getUserName().equals("admin")){
+            return true;
+        }
+
+        return false;
+    }
 }

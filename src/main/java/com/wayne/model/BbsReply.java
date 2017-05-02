@@ -1,9 +1,6 @@
 package com.wayne.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,14 +11,27 @@ import java.util.Date;
 @Entity
 @Table(name = "bbs_reply")
 public class BbsReply extends BaseModel {
-	@Id
-	@GeneratedValue
+
 	private Integer id ;
 	private Integer postId ;
 	private Integer topicId ;
-	private Integer userId ;
 	private String content ;
 	private Date createTime ;
+
+	private BbsUser bbsUser;
+
+	@JoinColumn(name="user_id",unique = true)
+	@ManyToOne()
+	public BbsUser getBbsUser() {
+		return bbsUser;
+	}
+
+	public void setBbsUser(BbsUser bbsUser) {
+		this.bbsUser = bbsUser;
+	}
+
+	@Id
+	@GeneratedValue
 	public Integer getId() {
 		return id;
 	}
@@ -44,14 +54,6 @@ public class BbsReply extends BaseModel {
 
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public String getContent() {

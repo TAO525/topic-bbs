@@ -6,10 +6,10 @@
 
 <!-- 自定义函数 -->
 <#assign level = "com.wayne.common.LevelMethod"?new()/>
-
+<#assign printTime = "com.wayne.common.PrintTimeMethod"?new()/>
 <!-- 是否是admin用户 -->
 <#if (user.id)?? && (user.id == 1) >
         <#assign isAdmin = true/>
     <#else>
-        <#assign isAdmin = false/>
+        <#assign isAdmin = true/>
 </#if>

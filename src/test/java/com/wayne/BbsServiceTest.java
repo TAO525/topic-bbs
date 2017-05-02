@@ -2,6 +2,7 @@ package com.wayne;
 
 import com.wayne.dao.BbsPostRepository;
 import com.wayne.dao.BbsTopicRepository;
+import com.wayne.model.BbsPost;
 import com.wayne.model.BbsTopic;
 import com.wayne.service.BbsService;
 import org.junit.Test;
@@ -90,5 +91,16 @@ public class BbsServiceTest extends BaseServiceTest {
     public void test_getTopicsByModuleId(){
         Page<BbsTopic> topicsByModuleId = bbsService.getTopicsByModuleId(2, 1, 10);
         logger.info(topicsByModuleId.toString());
+    }
+
+    @Test
+    public void test_getPosts(){
+        List<BbsPost> postByTopicId = bbsService.getPostByTopicId(69);
+        logger.info(postByTopicId.toString());
+    }
+
+    @Test
+    public void test_deletePosts(){
+         bbsService.deletePost(224);
     }
 }

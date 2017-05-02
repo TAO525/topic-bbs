@@ -18,6 +18,9 @@ public interface BbsPostRepository extends JpaRepository<BbsPost, Integer> {
 
     List<BbsPost> findByCreateTimeBetween(Date fileupdateDate, Date topiclastupdate);
 
+    @Query("select b from BbsPost b where b.topicId = ?1 order by b.createTime desc ")
+    List<BbsPost> getByTopicId(int topicId);
+
     void deleteByTopicId(Integer id);
 
     /* 这里名字对了但是类型有错 所以方法不行 */
