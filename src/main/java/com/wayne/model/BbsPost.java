@@ -2,7 +2,7 @@ package com.wayne.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "bbs_post")
@@ -16,7 +16,7 @@ public class BbsPost extends BaseModel {
 	private Date updateTime ;
 
 	private BbsUser bbsUser;
-	private Set<BbsReply> replys;
+	private List<BbsReply> replys;
 
 
 	@JoinColumn(name="user_id",unique = true)
@@ -31,11 +31,11 @@ public class BbsPost extends BaseModel {
 
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)//级联保存、更新、删除、刷新;取消延迟加载
 	@JoinColumn(name="postId")//在book表增加一个外键列来实现一对多的单向关联
-	public Set<BbsReply> getReplys() {
+	public List<BbsReply> getReplys() {
 		return replys;
 	}
 
-	public void setReplys(Set<BbsReply> replys) {
+	public void setReplys(List<BbsReply> replys) {
 		this.replys = replys;
 	}
 

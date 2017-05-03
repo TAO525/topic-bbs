@@ -6,7 +6,7 @@
     <!-- 引入 Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/js/simditor/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="/js/simditor/simditor.min.css" />
     <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
     <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->

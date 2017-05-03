@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/js/simditor/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="/js/simditor/simditor.min.css" />
+    <link href="/css/index.css" rel="stylesheet">
     <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
     <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
     <!--[if lt IE 9]>
@@ -18,8 +18,7 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugin/layer.js"></script>
-   <#-- <script type="text/javascript" src="/js/marked.min.js"></script>
-    <script type="text/javascript" src="/js/to-markdown.min.js"></script>-->
+
     <script src="//cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
     <script src="//cdn.bootcss.com/to-markdown/3.0.3/to-markdown.min.js"></script>
     <script type="text/javascript" src="/js/simditor/simditor.min.js"></script>

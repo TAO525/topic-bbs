@@ -70,6 +70,8 @@ public class BbsController extends BaseController{
             view.addObject("pagename", keyword);
             view.addObject("resultnum", searcherKeywordPage.getTotalElements());
             view.addObject("keyword",keyword);
+            System.out.println("===================number"+searcherKeywordPage.getNumber());
+            System.out.println("===================totalpages"+searcherKeywordPage.getTotalPages());
         }
         return view;
     }
