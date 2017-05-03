@@ -82,4 +82,35 @@ public interface BbsService {
      * @param bbsUser
      */
     void saveTopic(BbsTopic bbsTopic, BbsPost bbsPost, BbsUser bbsUser);
+
+    /**
+     * 通知参与人
+     * @param topicId
+     * @param ownerId
+     */
+    void notifyParticipant(Integer topicId, Integer ownerId);
+
+    /**
+     * 获取我的消息数量
+     * @param userId
+     * @param i
+     * @return
+     */
+    Integer getMessageCount(Integer userId, int i);
+
+    /**
+     * 获取有消息的话题列表
+     * @param id
+     * @return
+     */
+    List<BbsTopic> getMyMsgTopics(Integer id);
+
+    /**
+     * 更新消息状态
+     * @param userId
+     * @param topicId
+     * @param status
+     * @return
+     */
+    void updateMsgStatus(Integer userId, int topicId, int status);
 }

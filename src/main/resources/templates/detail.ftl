@@ -23,7 +23,10 @@
     <script src="//cdn.bootcss.com/to-markdown/3.0.3/to-markdown.min.js"></script>
     <script type="text/javascript" src="/js/simditor/simditor.min.js"></script>
     <script type="text/javascript" src="/js/post.js"></script>
-    <style>.panel-body img{max-width:100% !important;height:auto !important}</style>
+    <style>
+        body{padding-bottom: 60px!important;}
+        .panel-body img{max-width:100% !important;height:auto !important}
+    </style>
 </head>
 <body>
 

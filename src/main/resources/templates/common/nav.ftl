@@ -41,8 +41,11 @@
                 <li><a href="/bbs/topic/add.html"><i class="fa fa-plus"></i> 发帖</a></li>
                 <li class="dropdown">
                 <#--@ var mcount = c.myMessageCount(_user.id);-->
-                    <#assign mcount = 0/>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle-o"></i> ${user.userName!} <#--${mcount > 0?'<span class="badge mcount">'+mcount+'</span> '}--><span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle-o"></i> ${user.userName!} <#--${mcount > 0?'<span class="badge mcount">'+mcount+'</span> '}-->
+                        <#if msgCount gt 0 >
+                            <span class="badge mcount">${msgCount}</span>
+                        </#if>
+                        <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="javascript:;">你已有${user.score!}积分</a></li>
                         <li><a href="javascript:;">等级${level(user.level!)}</a></li>

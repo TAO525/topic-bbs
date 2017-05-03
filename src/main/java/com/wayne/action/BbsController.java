@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,16 @@ public class BbsController extends BaseController{
     @ModelAttribute("moduleList")
     public List<BbsModule> moduleList(){
         return bbsService.getModuleList();
+    }
+
+    @ModelAttribute("msgCount")
+    public Integer msgCount(HttpServletRequest request,HttpServletResponse response){
+        BbsUser user = WebUtils.currentUser(request, response);
+        if(user != null) {
+            return bbsService.getMessageCount(user.getId(),1);
+        }else {
+            return 0;
+        }
     }
 
     @RequestMapping("/index")
@@ -168,6 +179,9 @@ public class BbsController extends BaseController{
             BbsUser user =  WebUtils.currentUser(request, response);
             post.setBbsUser(user);
             bbsService.savePost(post);
+            //通知消息
+            bbsService.notifyParticipant(post.getTopicId(),user.getId());
+
             result.put("msg", "/bbs/topic/"+post.getTopicId()+"-"+1+".html");
             result.put("err", 0);
 
@@ -211,6 +225,8 @@ public class BbsController extends BaseController{
             reply.setPostId(reply.getPostId());
             reply.setCreateTime(new Date());
             bbsService.saveReply(reply);
+            //通知消息
+            bbsService.notifyParticipant(reply.getTopicId(),user.getId());
 //            reply.set("bbsUser", user);
 //            reply.setUser(user);
             result.put("msg", "评论成功！");
@@ -230,4 +246,21 @@ public class BbsController extends BaseController{
         return view;
     }
 
+
+    @RequestMapping("/myMessage.html")
+    public ModelAndView  myPage(HttpServletRequest request, HttpServletResponse response){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("message");
+        BbsUser user = WebUtils.currentUser(request, response);
+        List<BbsTopic> list = bbsService.getMyMsgTopics(user.getId());
+        view.addObject("list", list);
+        return view;
+    }
+
+    @RequestMapping("/my/{p}.html")
+    public RedirectView openMyTopic(@PathVariable int p, HttpServletRequest request, HttpServletResponse response){
+        BbsUser user = WebUtils.currentUser(request, response);
+        bbsService.updateMsgStatus(user.getId(), p,0);
+        return  new RedirectView( request.getContextPath()+"/bbs/topic/"+p+"-1.html");
+    }
 }

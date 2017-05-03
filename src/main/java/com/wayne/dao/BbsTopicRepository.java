@@ -43,6 +43,9 @@ public interface BbsTopicRepository extends JpaRepository<BbsTopic, Integer>,Jpa
 
     void deleteById(int id);
 
+    @Query(value = "SELECT t.* FROM bbs_message m left join bbs_topic t on m.topic_id= t.id where m.user_id= ?1 and status = 1",nativeQuery = true)
+    List<BbsTopic> getMyMsgTopics(Integer id);
+
 
     /*返回对象属性如何取别名？ 不用as，但是数据类型要对*/
   /*  @Query(value = "SELECT new com.wayne.common.lucene.entity.IndexObject(p.id topicId,p.content) FROM BbsTopic p WHERE create_time BETWEEN ?1 AND ?2")

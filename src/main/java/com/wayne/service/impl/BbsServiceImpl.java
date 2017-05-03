@@ -3,10 +3,7 @@ package com.wayne.service.impl;
 
 import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
-import com.wayne.dao.BbsModuleRepository;
-import com.wayne.dao.BbsPostRepository;
-import com.wayne.dao.BbsReplyRepository;
-import com.wayne.dao.BbsTopicRepository;
+import com.wayne.dao.*;
 import com.wayne.model.*;
 import com.wayne.service.BbsService;
 import com.wayne.service.BbsUserService;
@@ -44,6 +41,9 @@ public class BbsServiceImpl implements BbsService {
 
     @Autowired
     private BbsModuleRepository moduleDao;
+
+    @Autowired
+    private BbsMessageRepository messageDao;
 
     @Autowired
     private BbsUserService bbsUserService;
@@ -241,5 +241,53 @@ public class BbsServiceImpl implements BbsService {
         bbsPost.setCreateTime(new Date());
         postDao.save(bbsPost);
         bbsUserService.addTopicScore(bbsUser.getId());
+    }
+
+    @Override
+    @Transactional
+    public void notifyParticipant(Integer topicId, Integer ownerId) {
+        List<Integer> userIds = postDao.getUserIdsByTopicId(topicId);
+        for(Integer userId:userIds){
+            if(userId == ownerId){
+                continue;
+            }
+            //TODO,以后改成批处理,但存在insert&update问题
+            makeOneBbsMessage(userId,topicId,1);
+        }
+    }
+
+    private BbsMessage makeOneBbsMessage(Integer userId, int topicId, int status){
+        BbsMessage msg = new BbsMessage();
+        msg.setUserId(userId);
+        msg.setTopicId(topicId);
+        List<BbsMessage> list = messageDao.findAllByUserIdAndAndTopicId(userId, topicId);
+        if(list.isEmpty()){
+            msg.setStatus(status);
+            messageDao.save(msg);
+            return msg;
+        }else{
+            msg =  list.get(0);
+            if(msg.getStatus()!=status){
+                msg.setStatus(status);
+                messageDao.updateStatusById(msg.getId(),status);
+            }
+            return msg;
+        }
+    }
+
+    @Override
+    public Integer getMessageCount(Integer userId, int i) {
+        return messageDao.countBbsMessageByUserIdAndStatus(userId,i);
+    }
+
+    @Override
+    public List<BbsTopic> getMyMsgTopics(Integer id) {
+        return topicDao.getMyMsgTopics(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateMsgStatus(Integer userId, int topicId, int status) {
+        messageDao.updateMsgStatus(userId, topicId, status);
     }
 }

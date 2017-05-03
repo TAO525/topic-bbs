@@ -112,6 +112,23 @@ public class BbsAdminController extends BaseController{
     }
 
 
+    @RequestMapping("/message/update")
+    @ResponseBody
+    public JSONObject editMessage(Integer topicId,HttpServletRequest request, HttpServletResponse response){
+        JSONObject result = new JSONObject();
+        BbsUser user = WebUtils.currentUser(request, response);
+        if(user==null){
+            result.put("err", 1);
+            result.put("msg", "用户未登录");
+        }else {
+            bbsService.updateMsgStatus(user.getId(),topicId,0);
+            result.put("err", 0);
+            result.put("msg", "success");
+        }
+        return result;
+    }
+
+
     @RequestMapping("/post/edit/{id}.html")
     public ModelAndView editPost(ModelAndView view, @PathVariable int id, HttpServletRequest request, HttpServletResponse response){
         view.setViewName("postEdit");
@@ -121,7 +138,6 @@ public class BbsAdminController extends BaseController{
         view.addObject("topic", bbsService.getById(tipicId));
         return view;
     }
-
 
     /**
      * ajax方式编辑内容

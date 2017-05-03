@@ -118,4 +118,24 @@ public class BbsServiceTest extends BaseServiceTest {
         bbsPost.setUpdateTime(new Date());
         bbsService.savePost(bbsPost);
     }
+
+    @Test
+    public void test_notifyParticipant(){
+        bbsService.notifyParticipant(74,4);
+    }
+
+    @Test
+    public void test_messageCount(){
+        Integer messageCount = bbsService.getMessageCount(4, 0);
+        System.out.println(messageCount);
+    }
+
+    @Test
+    public void test_getMyMsgTopics(){
+        List<BbsTopic> myMsgTopics = bbsService.getMyMsgTopics(4);
+        for (BbsTopic bbsTopic:myMsgTopics){
+            System.out.println(bbsTopic);
+        }
+    }
+
 }
