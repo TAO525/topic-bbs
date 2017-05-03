@@ -241,13 +241,5 @@ public class BbsServiceImpl implements BbsService {
         bbsPost.setCreateTime(new Date());
         postDao.save(bbsPost);
         bbsUserService.addTopicScore(bbsUser.getId());
-       /* topic.setUserId(user.getId());
-        topic.setCreateTime(new Date());
-        topicDao.insert(topic, true);
-        post.setUserId(user.getId());
-        post.setTopicId(topic.getId());
-        post.setCreateTime(new Date());
-        postDao.insert(post);
-        gitUserService.addTopicScore(user.getId());*/
     }
 }

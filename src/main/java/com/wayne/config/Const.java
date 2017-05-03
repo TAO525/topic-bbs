@@ -18,4 +18,8 @@ public class Const {
     public static int POST_PAGE_SIZE = 8;       // 跟帖分页大小
     public static int REPLY_PAGE_SIZE = 5;      // 帖子回复分页大小
     public static int PAGE_SIZE_FOR_ADMIN = 30; // 管理员后台（查看帖子，回帖，跟帖）的分页大小
+
+    public static int TITLE_MIN_SIZE = 4;       // 标题最少字数
+    public static int CONTENT_MIN_SIZE = 10;    // 文章最少字数
+    public static int REPLY_MIN_SIZE = 6;       // 回复最少字数
 }

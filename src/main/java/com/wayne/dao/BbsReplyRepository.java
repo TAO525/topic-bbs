@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BbsReplyRepository extends JpaRepository<BbsReply, Integer> {
     void deleteByTopicId(Integer id);
 
-    void deleteByPostId(Integer id);
+    void deleteByPostId(Integer postId);
 }

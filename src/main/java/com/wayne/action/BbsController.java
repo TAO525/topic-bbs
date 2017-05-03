@@ -97,13 +97,7 @@ public class BbsController extends BaseController{
         ModelAndView view = new  ModelAndView();
         view.setViewName("detail");
         List<BbsPost> posts = bbsService.getPostByTopicId(id);
-        /*PageQuery query = new PageQuery(p, new HashMap(){{put("topicId", id);}});
-        bbsService.getPosts(query);
-        view.addObject("postPage", query);
-        BbsTopic topic = bbsService.getTopic(id);
-        topic.setPv(topic.getPv() + 1);
-        sql.updateById(topic);
-        view.addObject("topic", topic);*/
+
         bbsService.increasePv(id);
         BbsTopic topic = bbsService.getById(id);
         view.addObject("posts",posts);
@@ -138,7 +132,7 @@ public class BbsController extends BaseController{
         result.put("err", 1);
         if(user==null){
             result.put("msg", "请先登录后再继续！");
-        }else if(title.length()<10||postContent.length()<10){
+        }else if(title.length()<Const.TITLE_MIN_SIZE||postContent.length()<Const.CONTENT_MIN_SIZE){
             //客户端需要完善
             result.put("msg", "标题或内容太短！");
         }else{
@@ -166,7 +160,7 @@ public class BbsController extends BaseController{
     public JSONObject savePost(BbsPost post, HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
         result.put("err", 1);
-        if(post.getContent().length()<10){
+        if(post.getContent().length()<Const.CONTENT_MIN_SIZE){
             result.put("msg", "内容太短，请重新编辑！");
         }else{
             post.setHasReply(0);
@@ -210,7 +204,7 @@ public class BbsController extends BaseController{
         BbsUser user = WebUtils.currentUser(request, response);
         if(user==null){
             result.put("msg", "未登录用户！");
-        }else if(reply.getContent().length()<10){
+        }else if(reply.getContent().length()<Const.REPLY_MIN_SIZE){
             result.put("msg", "回复内容太短，请修改!");
         }else{
             reply.setBbsUser(user);

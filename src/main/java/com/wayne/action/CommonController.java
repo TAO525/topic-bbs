@@ -23,7 +23,6 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.wayne.action.BaseController.CODE_NAME;
 
 /**
  * 验证码
@@ -32,7 +31,7 @@ import static com.wayne.action.BaseController.CODE_NAME;
  */
 @Controller
 @RequestMapping("/bbs/common")
-public class CommonController {
+public class CommonController extends BaseController{
 
     static String filePath = null;
     static {
