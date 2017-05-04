@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="${ctxPath}/static/images/favicon.ico">
     <!-- 引入 Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/js/validator/bootstrapValidator.min.css" rel="stylesheet">
     <link href="/css/regist.css" rel="stylesheet">
 
     <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
@@ -18,6 +19,7 @@
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/validator/bootstrapValidator.min.js"></script>
 </head>
 <body>
 
@@ -29,19 +31,19 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">用户名：</label>
                 <div class="col-sm-8">
-                    <input id="username" name="userName" class="form-control" type="text" aria-required="true" aria-invalid="true" value="" class="error">
+                    <input id="username" maxlength="18" name="userName" class="form-control" type="text" aria-required="true" aria-invalid="true" value="" class="error">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">密码：</label>
                 <div class="col-sm-8">
-                    <input id="password" name="password" class="form-control" type="text" aria-required="true" aria-invalid="true" class="error" value="">
+                    <input id="password" maxlength="32" name="password" class="form-control" type="text" aria-required="true" aria-invalid="true" class="error" value="">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">E-mail：</label>
                 <div class="col-sm-8">
-                    <input id="email" name="email" class="form-control" type="email" value=>
+                    <input id="email" name="email" maxlength="250" class="form-control" type="email" value=>
                 </div>
             </div>
            <#-- <div class="form-group">
@@ -69,6 +71,7 @@
 <script>
     //全局表单ajax提交(onsubmit="return ajaxSubmit(this,reload)")
     function ajaxSubmit(form,reload){
+//        $('#signupForm').bootstrapValidator('validate');
         form = $(form);
         $.post(form.attr('action'),form.serialize(),function(json,status){
             if(json.err){
@@ -79,6 +82,62 @@
         })
         return false;
     }
+
+    $(function () {
+        $('form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                userName: {
+                    message: '用户名验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 18,
+                            message: '用户名长度必须在6到18位之间'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '用户名只能包含大写、小写、数字和下划线'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 18,
+                            message: '密码长度必须大于6'
+                        },
+                        different:{
+                            field: 'username',
+                            message: '密码不能和用户名相同'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: '邮箱不能为空'
+                        },
+                        emailAddress: {
+                            message: '邮箱地址格式有误'
+                        }
+                    }
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>
