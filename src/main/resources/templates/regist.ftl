@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bootstrap 模板</title>
+    <title>301Topic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一起发言吧">
+    <link rel="shortcut icon" href="${ctxPath}/static/images/favicon.ico">
     <!-- 引入 Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/regist.css" rel="stylesheet">

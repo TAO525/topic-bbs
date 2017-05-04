@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/bbs/admin")
 public class BbsAdminController extends BaseController{
 
-
     @Resource
     private BbsService bbsService;
 
@@ -155,7 +154,6 @@ public class BbsAdminController extends BaseController{
         if(post.getContent().length()<10){
             result.put("msg", "输入的内容太短，请重新编辑！");
         }else{
-//            BbsPost db = sql.unique(BbsPost.class, post.getId());
             BbsPost db = bbsService.getPostById(post.getId());
             if(canUpdatePost(db,request,response)){
                 db.setContent(post.getContent());
