@@ -31,7 +31,4 @@ public interface BbsPostRepository extends JpaRepository<BbsPost, Integer> {
     @Query(value = "SELECT user_id FROM bbs_post WHERE topic_id = ?1",nativeQuery = true)
     List<Integer> getUserIdsByTopicId(Integer topicId);
 
-    /* 这里名字对了但是类型有错 所以方法不行 */
-   /* @Query(value = "SELECT new com.wayne.common.lucene.entity.IndexObject(p.topicId,p.content) FROM BbsPost p WHERE create_time BETWEEN ?1 AND ?2")
-    List<IndexObject> getBbsPostListByDate(Date fileupdateDate, Date topiclastupdate);*/
 }

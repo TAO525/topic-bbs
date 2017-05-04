@@ -131,24 +131,4 @@ public class BbsTopic extends BaseModel {
 	}
 
 
-	/*@Transient
-	public String getNiceDate() {
-		Date date = this.createTime;
-		if (null == date) return "";
-		String result = null;
-		long currentTime = new Date().getTime() - date.getTime();
-		int time = (int)(currentTime / 1000);
-		if(time < 60) {
-			result = "刚刚";
-		} else if(time >= 60 && time < 3600) {
-			result = time/60 + "分钟前";
-		} else if(time >= 3600 && time < 86400) {
-			result = time/3600 + "小时前";
-		} else if(time >= 86400 && time < 864000) {
-			result = time/86400 + "天前";
-		} else{
-			result = MY_DATE_FORMAT.format(date);
-		}
-		return result;
-	}*/
 }
