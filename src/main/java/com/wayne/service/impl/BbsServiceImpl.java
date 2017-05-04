@@ -70,7 +70,6 @@ public class BbsServiceImpl implements BbsService {
         List<IndexObject> bbsTopics = new ArrayList<>();
         List<IndexObject> bbsPosts = new ArrayList<>();
         try {
-//            Map<String,Date> lastPostDate = postDao.getLastPostDate();
             Date lastPostDate = postDao.getLastPostDate();
             Date lastTopicDate = topicDao.getLastTopicDate();
 

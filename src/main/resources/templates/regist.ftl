@@ -71,7 +71,6 @@
     function ajaxSubmit(form,reload){
         form = $(form);
         $.post(form.attr('action'),form.serialize(),function(json,status){
-            <#--json.err?$.alert(json.msg):reload?location.reload():location.replace('${ctxPath}'+json.msg);-->
             if(json.err){
                 $('#tip').show().empty().append(json.msg);
             }else{

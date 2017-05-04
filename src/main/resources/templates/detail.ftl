@@ -58,7 +58,6 @@
             <ul class="list-group">
                 <#list post.replys as reply>
                     <li class="list-group-item">
-                        <#--@include("/common/replyItem.html",{"reply":reply}){}-->
                         <span class="text-info">${reply.bbsUser.userName}</span><span class="text-muted">：${reply.content}（${printTime(reply.createTime)}）</span>
                     </li>
                 </#list>

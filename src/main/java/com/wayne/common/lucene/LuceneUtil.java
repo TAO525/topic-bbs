@@ -188,10 +188,6 @@ public class LuceneUtil {
 //			    System.out.println("=======================");
 			}
 
-			/*pageQuery.setPageSize(pageSize);
-			pageQuery.setTotalRow(topDocs.totalHits);
-			Collections.sort(searchResults);
-			pageQuery.setList(searchResults);*/
 			Collections.sort(searchResults);
 			PageRequest pageRequest = new PageRequest(currentPage-1, pageSize);
 			pageQuery = new PageImpl<>(searchResults,pageRequest,topDocs.totalHits);

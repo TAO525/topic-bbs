@@ -184,20 +184,6 @@ public class BbsController extends BaseController{
 
             result.put("msg", "/bbs/topic/"+post.getTopicId()+"-"+1+".html");
             result.put("err", 0);
-
-            // TODO: 2017/5/2 message
-           /* BbsTopic topic = bbsService.getTopic(post.getTopicId());
-            int totalPost = topic.getPostCount() + 1;
-            topic.setPostCount(totalPost);
-            sql.updateById(topic);
-
-            bbsService.notifyParticipant(topic.getId(),user.getId());
-
-            int pageSize = (int)PageQuery.DEFAULT_PAGE_SIZE;
-            int page = (totalPost/pageSize)+(totalPost%pageSize==0?0:1);
-            result.put("msg", "/bbs/topic/"+post.getTopicId()+"-"+page+".html");
-            result.put("err", 0);*/
-
         }
         return result;
     }
@@ -227,15 +213,8 @@ public class BbsController extends BaseController{
             bbsService.saveReply(reply);
             //通知消息
             bbsService.notifyParticipant(reply.getTopicId(),user.getId());
-//            reply.set("bbsUser", user);
-//            reply.setUser(user);
             result.put("msg", "评论成功！");
             result.put("err", 0);
-
-            // TODO: 2017/5/2 消息处理
-//            BbsTopic topic = bbsService.getById(reply.getTopicId());
-//            bbsService.notifyParticipant(reply.getTopicId(),user.getId());
-
         }
         return result;
     }
