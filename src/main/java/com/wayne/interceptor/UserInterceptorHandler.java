@@ -56,9 +56,10 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
         	filter = true;
 		}
 
+		//处理非ajax请求才可以跳转 ajax请求拦截的需要js相应改动
 		if(!filter){
 			logger.info("用户未登录:"+request.getRequestURL().toString());
-			response.sendRedirect("/bbs/user/login.html?referer="+java.net.URLEncoder.encode(request.getRequestURL().toString() , "UTF-8"));
+			response.sendRedirect("/bbs/index/1.html?referer="+java.net.URLEncoder.encode(request.getRequestURL().toString() , "UTF-8"));
 		}
 
         return filter ;

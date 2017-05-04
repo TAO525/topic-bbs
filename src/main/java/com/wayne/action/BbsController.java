@@ -5,6 +5,7 @@ import com.wayne.common.WebUtils;
 import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
 import com.wayne.config.Const;
+import com.wayne.interceptor.Auth;
 import com.wayne.model.*;
 import com.wayne.service.BbsService;
 import org.apache.commons.lang3.StringUtils;
@@ -219,6 +220,7 @@ public class BbsController extends BaseController{
         return result;
     }
 
+    @Auth
     @RequestMapping("/topic/add.html")
     public ModelAndView addTopic(ModelAndView view){
         view.setViewName("post");
@@ -226,6 +228,7 @@ public class BbsController extends BaseController{
     }
 
 
+    @Auth
     @RequestMapping("/myMessage.html")
     public ModelAndView  myPage(HttpServletRequest request, HttpServletResponse response){
         ModelAndView view = new ModelAndView();
@@ -233,6 +236,17 @@ public class BbsController extends BaseController{
         BbsUser user = WebUtils.currentUser(request, response);
         List<BbsTopic> list = bbsService.getMyMsgTopics(user.getId());
         view.addObject("list", list);
+        return view;
+    }
+
+    @Auth
+    @RequestMapping("/post/edit/{id}.html")
+    public ModelAndView editPost(ModelAndView view, @PathVariable int id, HttpServletRequest request, HttpServletResponse response){
+        view.setViewName("postEdit");
+        BbsPost post = bbsService.getPostById(id);
+        Integer tipicId = post.getTopicId();
+        view.addObject("post",post);
+        view.addObject("topic", bbsService.getById(tipicId));
         return view;
     }
 

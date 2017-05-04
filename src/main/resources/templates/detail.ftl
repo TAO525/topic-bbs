@@ -46,7 +46,7 @@
             <#if user??>
                 <div class="btn-group btn-group-xs pull-right">
                     <#if (isAdmin) || (user.id == post.bbsUser.id) >
-                        <a class="btn btn-default" href="${ctxPath}/bbs/admin/post/edit/${post.id}.html"><i class="fa fa-edit"></i> 编辑</a>
+                        <a class="btn btn-default" href="${ctxPath}/bbs/post/edit/${post.id}.html"><i class="fa fa-edit"></i> 编辑</a>
                         <a class="btn btn-default" href="javascript:;" onclick="deletePost(this)"><i class="fa fa-trash"></i> 删除</a>
                     </#if>
                     <a class="btn btn-default" href="javascript:;" onclick="showReplyDialog('${post.id!}','${topic.id!}')"><i class="fa fa-reply"></i> 回复</a>

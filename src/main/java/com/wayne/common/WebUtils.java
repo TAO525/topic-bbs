@@ -5,6 +5,7 @@ import com.wayne.model.BbsUser;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -162,6 +163,21 @@ public class WebUtils {
 			return user;
 		}
 		return null;
+	}
+
+	/**
+	 * 是否是Ajax请求
+	 * @param request
+	 * @return
+	 */
+	public static boolean isAjax(ServletRequest request){
+		String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
+		if("XMLHttpRequest".equalsIgnoreCase(header)){
+//			当前请求为Ajax请求
+			return Boolean.TRUE;
+		}
+//		当前请求非Ajax请求
+		return Boolean.FALSE;
 	}
 
 }

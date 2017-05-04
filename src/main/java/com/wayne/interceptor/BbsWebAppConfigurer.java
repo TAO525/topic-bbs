@@ -27,12 +27,14 @@ public class BbsWebAppConfigurer extends WebMvcConfigurerAdapter{
     @Autowired
     private FreeMarkerProperties properties;
 
+    private static final String FAVICON_URL = "/favicon.ico";
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(new UserInterceptorHandler()).addPathPatterns("/*");
+        registry.addInterceptor(new UserInterceptorHandler()).addPathPatterns("/**").excludePathPatterns(FAVICON_URL);
         super.addInterceptors(registry);
     }
 

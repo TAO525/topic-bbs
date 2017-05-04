@@ -6,11 +6,10 @@ import com.wayne.model.BbsPost;
 import com.wayne.model.BbsTopic;
 import com.wayne.model.BbsUser;
 import com.wayne.service.BbsService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -18,18 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 管理员
+ * 管理员(ajax请求 管理论坛)
  * @Author TAO
  * @Date 2017/4/11 14:57
  */
-@Controller
+@RestController
 @RequestMapping("/bbs/admin")
 public class BbsAdminController extends BaseController{
 
     @Resource
     private BbsService bbsService;
 
-    @ResponseBody
     @PostMapping("/topic/nice/{id}")
     public JSONObject editNiceTopic(@PathVariable int id, HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
@@ -53,7 +51,6 @@ public class BbsAdminController extends BaseController{
         return result;
     }
 
-    @ResponseBody
     @PostMapping("/topic/up/{id}")
     public JSONObject editUpTopic(@PathVariable int id,HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
@@ -78,7 +75,6 @@ public class BbsAdminController extends BaseController{
     }
 
 
-    @ResponseBody
     @PostMapping("/topic/delete/{id}")
     public JSONObject deleteTopic(@PathVariable int id,HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
@@ -94,7 +90,6 @@ public class BbsAdminController extends BaseController{
         return result;
     }
 
-    @ResponseBody
     @PostMapping("/post/delete/{id}")
     public JSONObject deletePost(@PathVariable int id,HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
@@ -112,7 +107,6 @@ public class BbsAdminController extends BaseController{
 
 
     @RequestMapping("/message/update")
-    @ResponseBody
     public JSONObject editMessage(Integer topicId,HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
         BbsUser user = WebUtils.currentUser(request, response);
@@ -128,16 +122,6 @@ public class BbsAdminController extends BaseController{
     }
 
 
-    @RequestMapping("/post/edit/{id}.html")
-    public ModelAndView editPost(ModelAndView view, @PathVariable int id, HttpServletRequest request, HttpServletResponse response){
-        view.setViewName("postEdit");
-        BbsPost post = bbsService.getPostById(id);
-        Integer tipicId = post.getTopicId();
-        view.addObject("post",post);
-        view.addObject("topic", bbsService.getById(tipicId));
-        return view;
-    }
-
     /**
      * ajax方式编辑内容
      * @param view
@@ -146,7 +130,6 @@ public class BbsAdminController extends BaseController{
      * @param response
      * @return
      */
-    @ResponseBody
     @RequestMapping("/post/update")
     public JSONObject updatePost(ModelAndView view, BbsPost post,HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();

@@ -40,7 +40,6 @@
             <#if user??>
                 <li><a href="/bbs/topic/add.html"><i class="fa fa-plus"></i> 发帖</a></li>
                 <li class="dropdown">
-                <#--@ var mcount = c.myMessageCount(_user.id);-->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle-o"></i> ${user.userName!} <#--${mcount > 0?'<span class="badge mcount">'+mcount+'</span> '}-->
                         <#if msgCount gt 0 >
                             <span class="badge mcount">${msgCount}</span>
