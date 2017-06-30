@@ -24,4 +24,5 @@ public class BaseController {
         logger.info("首页访问");
         return new ModelAndView( "forward:/bbs/index/1.html");
     }
+
 }

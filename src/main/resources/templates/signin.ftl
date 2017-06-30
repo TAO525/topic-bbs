@@ -24,20 +24,20 @@
 <div class="container">
 
     <form class="form-signin" action="${ctxPath}/bbs/user/login" onsubmit="return ajaxSubmit(this)">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">欢迎登录</h2>
         <div class="alert alert-danger alert-dismissable" id="tip"></div>
 
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="text" id="inputEmail" name="userName" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputEmail" class="sr-only">用户名</label>
+        <input type="text" id="inputEmail" name="userName" class="form-control" placeholder="用户名" required autofocus>
 
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
         <div class="checkbox">
             <#--<label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>-->
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
     </form>
 
 </div>
