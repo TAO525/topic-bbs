@@ -53,6 +53,7 @@ public class BbsController extends BaseController{
 
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request){
+        logger.info("首页访问");
         return new ModelAndView( "forward:/bbs/index/1.html");
     }
 
@@ -82,8 +83,8 @@ public class BbsController extends BaseController{
             view.addObject("pagename", keyword);
             view.addObject("resultnum", searcherKeywordPage.getTotalElements());
             view.addObject("keyword",keyword);
-            System.out.println("===================number"+searcherKeywordPage.getNumber());
-            System.out.println("===================totalpages"+searcherKeywordPage.getTotalPages());
+            logger.info("===================number"+searcherKeywordPage.getNumber());
+            logger.info("===================totalpages"+searcherKeywordPage.getTotalPages());
         }
         return view;
     }
