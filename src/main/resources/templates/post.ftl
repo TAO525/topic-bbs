@@ -24,6 +24,7 @@
     <script src="//cdn.bootcss.com/to-markdown/3.0.3/to-markdown.min.js"></script>
     <script type="text/javascript" src="/js/simditor/simditor.min.js"></script>
     <script type="text/javascript" src="/js/post.js"></script>
+    <script src="/js/main.js"></script>
 </head>
 <body>
 

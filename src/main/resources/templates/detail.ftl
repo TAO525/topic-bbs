@@ -25,6 +25,7 @@
     <script src="//cdn.bootcss.com/to-markdown/3.0.3/to-markdown.min.js"></script>
     <script type="text/javascript" src="/js/simditor/simditor.min.js"></script>
     <script type="text/javascript" src="/js/post.js"></script>
+    <script src="/js/main.js"></script>
     <style>
         body{padding-bottom: 60px!important;}
         .panel-body img{max-width:100% !important;height:auto !important}
@@ -34,8 +35,8 @@
 
 <#include "common/nav.ftl">
 
-<h3>主题：${topic.content}</h3>
-<#list posts as post>
+<h3>主题：${(topic.content)!}</h3>
+<#list posts! as post>
     <div class="panel panel-default" data-post="${post.id}">
         <div class="panel-heading">
             <span class="label label-primary">${post.bbsUser.userName}</span>
@@ -67,7 +68,7 @@
 </#list>
 
 <form id="postForm" action="${ctxPath}/bbs/post/save" method="POST"  onsubmit="return ajaxSubmit(this,'reload')">
-    <input type="hidden" name="topicId" value="${topic.id}">
+    <input type="hidden" name="topicId" value="${(topic.id)!}">
     <div class="form-group">
         <textarea id="postContent" name="content"></textarea>
     </div>

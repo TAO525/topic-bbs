@@ -8,12 +8,9 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
-import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.TextField;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -85,12 +82,50 @@ public class LuceneUtil {
 		return directory;
 	}
 
+	public void clear(){
+		IndexWriterConfig config = new IndexWriterConfig(getAnalyzer());
+		// 创建一个IndexWriter对象，对于索引库进行写操作
+		IndexWriter indexWriter = null;
+		try {
+			indexWriter = new IndexWriter(getDirectory(), config);
+			indexWriter.deleteAll();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				indexWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void delBy(String key,String value){
+		IndexWriterConfig config = new IndexWriterConfig(getAnalyzer());
+		// 创建一个IndexWriter对象，对于索引库进行写操作
+		IndexWriter indexWriter = null;
+		try {
+			indexWriter = new IndexWriter(getDirectory(), config);
+			/*BytesRef bytes = new BytesRef(NumericUtils.BUF_SIZE_INT);
+			NumericUtils.intToPrefixCoded(id, 0, bytes);*/
+			indexWriter.deleteDocuments(new Term(key,value)); //这里删除tid的文档，还会留在”回收站“。
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				indexWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 
 	/**
 	 * 创建索引
 	 */
     public void createDataIndexer(List<IndexObject> bbsContentList) {
-    	
+
     	 IndexWriter indexWriter = null;
 	     try {
 				        // 创建一个分析器对象
@@ -100,15 +135,19 @@ public class LuceneUtil {
 				         indexWriter = new IndexWriter(getDirectory(), config);
 				         //删除以前的索引
 				         //indexWriter.deleteAll();
-				         
+
 				        for (IndexObject t : bbsContentList) {
 				            // 创建一个Document对象
 				            Document document = new Document();
 				            // 向Document对象中添加域信息
 				            // 参数：1、域的名称；2、域的值；3、是否存储；
 				            Field contentField = new TextField("content", labelformat(t.getContent()), Store.YES);
-				            // storedFiled默认存储
-				            Field tidField = new StoredField("tid", t.getTopicId());
+				            // 如下解决方案也可成功删除Document
+							FieldType type = new FieldType();
+							type.setIndexOptions(IndexOptions.DOCS);
+							type.setTokenized(false);
+							type.setStored(true);
+				            Field tidField = new Field("tid", t.getTopicId(),type);
 				            // 将域添加到document对象中
 				            document.add(contentField);
 				            document.add(tidField);

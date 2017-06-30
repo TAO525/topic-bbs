@@ -48,6 +48,9 @@ public class BbsServiceImpl implements BbsService {
     @Autowired
     private BbsUserService bbsUserService;
 
+    @Autowired
+    private LuceneUtil luceneUtil;
+
     @Override
     public Page<BbsTopic> getTopics(int pageNumber,int pageSize) {
         PageRequest request = this.buildPageRequest(pageNumber,pageSize);
@@ -151,6 +154,7 @@ public class BbsServiceImpl implements BbsService {
     @Override
     @Transactional
     public void deleteTopic(int id) {
+        luceneUtil.delBy("tid",String.valueOf(id));
         topicDao.deleteById(id);
         postDao.deleteByTopicId(id);
         replyDao.deleteByTopicId(id);
@@ -205,6 +209,11 @@ public class BbsServiceImpl implements BbsService {
     @Override
     @Transactional
     public void deletePost(int id) {
+        //维护lucene
+        BbsPost one = postDao.getOne(id);
+        if(one!=null) {
+            luceneUtil.delBy("tid", String.valueOf(one.getTopicId()));
+        }
         postDao.delete(id);
         replyDao.deleteByPostId(id);
     }
