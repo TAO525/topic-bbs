@@ -110,6 +110,7 @@ public class BbsServiceImpl implements BbsService {
                         IndexObject indexObject = new IndexObject();
                         indexObject.setTopicId(String.valueOf(item.getTopicId()));
                         indexObject.setContent(item.getContent());
+                        indexObject.setPostId(String.valueOf(item.getId()));
                         bbsPosts.add(indexObject);
                     }
                 }
@@ -210,10 +211,7 @@ public class BbsServiceImpl implements BbsService {
     @Transactional
     public void deletePost(int id) {
         //维护lucene
-        BbsPost one = postDao.getOne(id);
-        if(one!=null) {
-            luceneUtil.delBy("tid", String.valueOf(one.getTopicId()));
-        }
+        luceneUtil.delBy("pid", String.valueOf(id));
         postDao.delete(id);
         replyDao.deleteByPostId(id);
     }
@@ -229,6 +227,8 @@ public class BbsServiceImpl implements BbsService {
     @Override
     @Transactional
     public void updatePostContent(BbsPost bbsPost) {
+        //维护lucene
+        luceneUtil.updateByPost(bbsPost.getTopicId(),bbsPost.getId(),bbsPost.getContent());
         postDao.updatePostContent(bbsPost.getId(),bbsPost.getContent());
     }
 

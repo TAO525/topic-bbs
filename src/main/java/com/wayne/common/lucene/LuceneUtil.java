@@ -106,9 +106,41 @@ public class LuceneUtil {
 		IndexWriter indexWriter = null;
 		try {
 			indexWriter = new IndexWriter(getDirectory(), config);
-			/*BytesRef bytes = new BytesRef(NumericUtils.BUF_SIZE_INT);
-			NumericUtils.intToPrefixCoded(id, 0, bytes);*/
 			indexWriter.deleteDocuments(new Term(key,value)); //这里删除tid的文档，还会留在”回收站“。
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				indexWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void updateByPost(Integer tid,Integer pid,String content) {
+		if(pid == null){
+			return;
+		}
+		IndexWriterConfig config = new IndexWriterConfig(getAnalyzer());
+		// 创建一个IndexWriter对象，对于索引库进行写操作
+		IndexWriter indexWriter = null;
+		try {
+			indexWriter = new IndexWriter(getDirectory(), config);
+			Document document = new Document();
+			Field contentField = new TextField("content", labelformat(content), Store.YES);
+			// 如下解决方案也可成功删除Document
+			FieldType type = new FieldType();
+			type.setIndexOptions(IndexOptions.DOCS);
+			type.setTokenized(false);
+			type.setStored(true);
+			Field tidField = new Field("tid", String.valueOf(tid),type);
+			Field pidField = new Field("pid",String.valueOf(pid),type);
+			document.add(pidField);
+			document.add(contentField);
+			document.add(tidField);
+			// 将信息写入到索引库中
+			indexWriter.updateDocument(new Term("pid", String.valueOf(pid)), document);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
@@ -148,6 +180,11 @@ public class LuceneUtil {
 							type.setTokenized(false);
 							type.setStored(true);
 				            Field tidField = new Field("tid", t.getTopicId(),type);
+				            //看是否是post中的内容
+							if(StringUtils.isNotBlank(t.getPostId())){
+								Field pidField = new Field("pid",t.getPostId(),type);
+								document.add(pidField);
+							}
 				            // 将域添加到document对象中
 				            document.add(contentField);
 				            document.add(tidField);
@@ -322,4 +359,6 @@ public class LuceneUtil {
 			  if(date1.getTime() > date2.getTime())return true;
 			  return false;
   }
-}  
+
+
+}

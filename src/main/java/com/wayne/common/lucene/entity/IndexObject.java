@@ -6,6 +6,7 @@ public class IndexObject implements Comparable<IndexObject>{
 	private String topicId;
 	private String content;
 	private float score;//相似度
+	private String postId; //用来标记是post的内容 以便lucene 维护
 	public String getTopicId() {
 		return topicId;
 	}
@@ -55,6 +56,12 @@ public class IndexObject implements Comparable<IndexObject>{
 		}
 		return 0;
 	}
-	
-	
+
+	public String getPostId() {
+		return postId;
+	}
+
+	public void setPostId(String postId) {
+		this.postId = postId;
+	}
 }
