@@ -167,4 +167,19 @@ public class BbsAdminController extends BaseController{
 
         return false;
     }
+
+    @RequestMapping("/clearModuleList")
+    public JSONObject clearCache(ModelAndView view, BbsPost post,HttpServletRequest request, HttpServletResponse response){
+        JSONObject result = new JSONObject();
+        if(!WebUtils.isAdmin(request, response)){
+            //如果有非法使用，不提示具体信息，直接返回null
+            result.put("err", 1);
+            result.put("msg", "呵呵~~");
+        }else{
+            bbsService.clearModuleList();
+            result.put("err", 0);
+            result.put("msg", "success");
+        }
+        return result;
+    }
 }

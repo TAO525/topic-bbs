@@ -113,4 +113,9 @@ public interface BbsService {
      * @return
      */
     void updateMsgStatus(Integer userId, int topicId, int status);
+
+    /**
+     * 清除缓存
+     */
+    void clearModuleList();
 }

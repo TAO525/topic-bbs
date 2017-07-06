@@ -7,7 +7,10 @@ import com.wayne.dao.*;
 import com.wayne.model.*;
 import com.wayne.service.BbsService;
 import com.wayne.service.BbsUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +32,8 @@ import java.util.List;
  */
 @Service
 public class BbsServiceImpl implements BbsService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private BbsPostRepository postDao;
@@ -164,8 +169,15 @@ public class BbsServiceImpl implements BbsService {
     @Override
     @Cacheable("ModuleList")
     public List<BbsModule> getModuleList() {
+        logger.info("生成模块缓存");
         return moduleDao.findAll();
     }
+
+    @CacheEvict(value = "ModuleList", allEntries = true)
+    public void clearModuleList(){
+        logger.info("清除模块缓存");
+    }
+
 
     @Override
     public Page<BbsTopic> getTopicsByModuleId(Integer moduleId, int pageNumber, int pageSize) {

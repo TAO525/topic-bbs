@@ -50,6 +50,9 @@
                         <li><a href="javascript:;">等级${level(user.level!)}</a></li>
                         <li class="divider"></li>
                         <li><a href="${ctxPath}/bbs/myMessage.html">给我的回复</a></li>
+                        <#if isAdmin>
+                            <li><a href="javascript:;" onclick="$.post('${ctxPath}/bbs/admin/clearModuleList',function(){location.reload()})">更新模板</a></li>
+                        </#if>
                     </ul>
                 </li>
                 <li><a href="javascript:;" onclick="$.post('${ctxPath}/bbs/user/logout',function(){location.reload()})"><i class="fa fa-sign-out"></i> 注销</a></li>
