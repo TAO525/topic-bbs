@@ -70,7 +70,11 @@
 <form id="postForm" action="${ctxPath}/bbs/post/save" method="POST"  onsubmit="return ajaxSubmit(this,'reload')">
     <input type="hidden" name="topicId" value="${(topic.id)!}">
     <div class="form-group">
-        <textarea id="postContent" name="content"></textarea>
+        <#if user??>
+            <textarea id="postContent" name="content"></textarea>
+        <#else>
+            <textarea id="postContent" name="content" disabled placeholder="请登录再回复"></textarea>
+        </#if>
     </div>
     <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-check"></i> 提 交</button>
 </form>
@@ -93,6 +97,6 @@
     </div>
 </div>
 
-
+<#include "common/bottom.ftl">
 </body>
 </html>

@@ -42,6 +42,6 @@
     </div>
 </form>
 
-
+<#include "common/bottom.ftl">
 </body>
 </html>

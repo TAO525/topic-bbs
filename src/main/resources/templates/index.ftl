@@ -69,5 +69,6 @@
     <@paginator.page query= topics pageUrl="/bbs/index/" pageUrlParameter=""/>
 </#if>
 
+<#include "common/bottom.ftl">
 </body>
 </html>

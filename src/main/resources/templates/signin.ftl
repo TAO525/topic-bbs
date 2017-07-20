@@ -41,7 +41,7 @@
     </form>
 
 </div>
-
+<#include "common/bottom.ftl">
 <script>
     //全局表单ajax提交(onsubmit="return ajaxSubmit(this,reload)")
     function ajaxSubmit(form,reload){

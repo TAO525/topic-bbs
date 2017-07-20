@@ -24,7 +24,7 @@
 <body>
 
 
-<div class="row">
+<div class="row" style="margin-right: 0px">
     <div class="col-sm-6 col-sm-offset-3">
         <form class="form-horizontal m-t" id="signupForm" action="${ctxPath}/bbs/user/doRegister" method="POST" onsubmit="return ajaxSubmit(this)">
             <div class="alert alert-danger alert-dismissable" id="tip"></div>
@@ -68,6 +68,7 @@
         </form>
     </div>
 </div>
+<#include "common/bottom.ftl">
 <script>
     //全局表单ajax提交(onsubmit="return ajaxSubmit(this,reload)")
     function ajaxSubmit(form,reload){

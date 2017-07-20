@@ -41,5 +41,6 @@
 
 <@paginator.page query= searcherPage pageUrl="/bbs/index/" pageUrlParameter="?keyword=${keyword!}"/>
 
+<#include "common/bottom.ftl">
 </body>
 </html>
