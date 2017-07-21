@@ -55,6 +55,5 @@
         </tr>
     </table>
 </div>
-<#include "common/bottom.ftl">
 </body>
 </html>
