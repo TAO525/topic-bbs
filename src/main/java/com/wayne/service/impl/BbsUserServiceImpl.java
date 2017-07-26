@@ -9,6 +9,7 @@ import com.wayne.model.BbsUser;
 import com.wayne.service.BbsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author TAO
@@ -21,6 +22,7 @@ public class BbsUserServiceImpl implements BbsUserService {
     private BbsUserRepository bbsUserRepository;
 
     @Override
+    @Transactional
     public BbsUser setUserAccount(BbsUser user) {
         String pwd = HashUtil.generatePwd(user.getPassword());
         user.setPassword(pwd);
