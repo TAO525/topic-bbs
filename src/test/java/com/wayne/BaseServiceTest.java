@@ -15,4 +15,5 @@ import java.util.logging.Logger;
 public class BaseServiceTest {
 
     protected static final Logger logger = Logger.getGlobal();
+
 }

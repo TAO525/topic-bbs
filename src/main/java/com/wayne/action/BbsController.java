@@ -110,7 +110,6 @@ public class BbsController extends BaseController{
         ModelAndView view = new  ModelAndView();
         view.setViewName("detail");
         List<BbsPost> posts = bbsService.getPostByTopicId(id);
-
         bbsService.increasePv(id);
         BbsTopic topic = bbsService.getById(id);
         view.addObject("posts",posts);
@@ -131,7 +130,7 @@ public class BbsController extends BaseController{
      */
     @ResponseBody
     @PostMapping("/topic/save")
-    public JSONObject saveTopic(BbsTopic topic, BbsPost post, String title, String postContent,HttpServletRequest request, HttpServletResponse response){
+    public JSONObject saveTopic(BbsTopic topic, BbsPost post, String title, String postContent,String node,HttpServletRequest request, HttpServletResponse response){
         //@TODO， 防止频繁提交
         BbsUser user = WebUtils.currentUser(request, response);
 //		Date lastPostTime = bbsService.getLatestPost(user.getId());
@@ -141,8 +140,15 @@ public class BbsController extends BaseController{
 //			//10秒之内的提交都不处理
 //			throw new RuntimeException("提交太快，处理不了，上次提交是 "+lastPostTime);
 //		}
+
         JSONObject result = new JSONObject();
         result.put("err", 1);
+        //安全验证
+        String vnode = (String)request.getSession().getAttribute("node");
+        if(StringUtils.isEmpty(node) || !node.equals(vnode)){
+            result.put("msg", "将内容备份后刷新页面");
+            return result;
+        }
         if(user==null){
             result.put("msg", "请先登录后再继续！");
         }else if(title.length()<Const.TITLE_MIN_SIZE||postContent.length()<Const.CONTENT_MIN_SIZE){
@@ -164,6 +170,7 @@ public class BbsController extends BaseController{
 
             result.put("err", 0);
             result.put("msg", "/bbs/topic/"+topic.getId()+"-1.html");
+            request.getSession().removeAttribute("node");
         }
         return result;
     }
@@ -223,8 +230,10 @@ public class BbsController extends BaseController{
 
     @Auth
     @RequestMapping("/topic/add.html")
-    public ModelAndView addTopic(ModelAndView view){
+    public ModelAndView addTopic(ModelAndView view,HttpServletRequest request,HttpServletResponse response){
         view.setViewName("post");
+        int node = (int)(Math.random()*(9999-1000+1))+1000;
+        request.getSession().setAttribute("node",String.valueOf(node));
         return view;
     }
 

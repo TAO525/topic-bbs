@@ -43,6 +43,7 @@ public class LoginController extends BaseController{
     @ResponseBody
     @RequestMapping("/login")
     public JSONObject login(String userName, String password, HttpServletRequest request, HttpServletResponse response){
+//        System.out.println("---------------------login------------");
         JSONObject result = new JSONObject();
         result.put("err", 1);
         if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(password)){
@@ -77,6 +78,7 @@ public class LoginController extends BaseController{
     @ResponseBody
     @PostMapping("/doRegister")
     public JSONObject  register(BbsUser user,String code,HttpServletRequest request,HttpServletResponse response){
+//        System.out.println("-----------------hello world");
         JSONObject result  = new JSONObject();
         result.put("err", 1);
         HttpSession session = request.getSession(true);

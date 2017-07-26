@@ -50,6 +50,7 @@
         <div class="form-group">
             <textarea id="postContent" name="postContent" class="form-control"></textarea>
         </div>
+        <input type="hidden" name="node" value="${node!}">
         <div class="btn-group pull-right">
             <button class="btn btn-sm btn-primary submit-btn" title="Send" type="submit"><i class="fa fa-check"></i> 提交</button>
             <button class="btn btn-sm btn-default preview-btn" onclick="preview()" type="button"><i class="fa fa-eye"></i> 预览</button>

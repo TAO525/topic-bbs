@@ -26,7 +26,7 @@
 
 <div class="row" style="margin-right: 0px">
     <div class="col-sm-6 col-sm-offset-3">
-        <form class="form-horizontal m-t" id="signupForm" action="${ctxPath}/bbs/user/doRegister" method="POST" onsubmit="return ajaxSubmit(this)">
+        <form class="form-horizontal m-t" id="signupForm" action="" >
             <div class="alert alert-danger alert-dismissable" id="tip"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">用户名：</label>
@@ -62,7 +62,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-8 col-sm-offset-3">
-                    <button class="btn btn-primary" type="submit">提交</button>
+                    <button class="btn btn-primary" type="submit" onclick="ajaxSubmit()">提交</button>
                 </div>
             </div>
         </form>
@@ -70,11 +70,11 @@
 </div>
 <#include "common/bottom.ftl">
 <script>
-    //全局表单ajax提交(onsubmit="return ajaxSubmit(this,reload)")
-    function ajaxSubmit(form,reload){
+    //全局表单ajax提交(onsubmit="return ajaxSubmit(this,reload)") --> 会导致重复提交
+    function ajaxSubmit(reload){
 //        $('#signupForm').bootstrapValidator('validate');
-        form = $(form);
-        $.post(form.attr('action'),form.serialize(),function(json,status){
+        form = $('#signupForm');
+        $.post("/bbs/user/doRegister",form.serialize(),function(json,status){
             if(json.err){
                 $('#tip').show().empty().append(json.msg);
             }else{
@@ -83,6 +83,9 @@
         })
         return false;
     }
+    //阻止bootstrapValidator的默认提交事件
+    $("#signupForm").submit(function(ev){ev.preventDefault();});
+
 
     $(function () {
         $('form').bootstrapValidator({
@@ -138,6 +141,7 @@
                 }
             }
         });
+
     });
 </script>
 </body>
