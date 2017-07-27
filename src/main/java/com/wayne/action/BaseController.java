@@ -1,5 +1,6 @@
 package com.wayne.action;
 
+import com.wayne.common.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class BaseController {
 
     @RequestMapping("/")
     public ModelAndView index(HttpServletRequest request){
-        logger.info("首页访问");
+        logger.info(WebUtils.getIP(request)+"==首页访问");
         return new ModelAndView( "forward:/bbs/index/1.html");
     }
 

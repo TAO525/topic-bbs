@@ -31,17 +31,6 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
             throws Exception {
 
 		/*
-		 * 没有加@Auth 注解的就不需要过拦截器了
-		 */
-		final HandlerMethod handlerMethod = (HandlerMethod) handler;
-		final Method method = handlerMethod.getMethod();
-		final Class<?> clazz = method.getDeclaringClass();
-		if (!clazz.isAnnotationPresent(Auth.class) &&
-				!method.isAnnotationPresent(Auth.class)) {
-				return true;
-		}
-
-		/*
 			拦截器中无法注入service 手动加载 bbsUserService对应在factory 里面的bean name 为bbsUserServiceImpl
 		 */
 		if (bbsUserService == null) {
@@ -49,9 +38,22 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
 			bbsUserService = (BbsUserService) factory.getBean("bbsUserServiceImpl");
 		}
 
+		//记住我可以自动登录
+		BbsUser user = currentUser(request,response);
+
+		/*
+		 * 没有加@Auth 注解的就不需要过拦截器了
+		 */
+		final HandlerMethod handlerMethod = (HandlerMethod) handler;
+		final Method method = handlerMethod.getMethod();
+		final Class<?> clazz = method.getDeclaringClass();
+		if (!clazz.isAnnotationPresent(Auth.class) &&
+				!method.isAnnotationPresent(Auth.class)) {
+			return true;
+		}
+
 		boolean filter = false;
 
-        BbsUser user = currentUser(request,response);
         if(null != user){
         	filter = true;
 		}

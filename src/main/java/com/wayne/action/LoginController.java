@@ -42,7 +42,7 @@ public class LoginController extends BaseController{
      */
     @ResponseBody
     @RequestMapping("/login")
-    public JSONObject login(String userName, String password, HttpServletRequest request, HttpServletResponse response){
+    public JSONObject login(String userName, String password,boolean remember,HttpServletRequest request, HttpServletResponse response){
 //        System.out.println("---------------------login------------");
         JSONObject result = new JSONObject();
         result.put("err", 1);
@@ -53,7 +53,7 @@ public class LoginController extends BaseController{
             if(user==null){
                 result.put("msg","用户不存在");
             }else{
-                WebUtils.loginUser(request, response, user, true);
+                WebUtils.loginUser(request, response, user, remember);
                 result.put("msg", "/bbs/index/1.html");
                 result.put("err", 0);
             }
