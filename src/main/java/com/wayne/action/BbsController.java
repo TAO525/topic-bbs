@@ -5,6 +5,7 @@ import com.wayne.common.WebUtils;
 import com.wayne.common.lucene.LuceneUtil;
 import com.wayne.common.lucene.entity.IndexObject;
 import com.wayne.config.Const;
+import com.wayne.config.SecurityConst;
 import com.wayne.interceptor.Auth;
 import com.wayne.model.*;
 import com.wayne.service.BbsService;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +38,9 @@ public class BbsController extends BaseController{
 
     @Resource
     private BbsService bbsService;
+
+    @Resource
+    private JedisPool jedisPool;
 
     @ModelAttribute("moduleList")
     public List<BbsModule> moduleList(){
@@ -131,22 +137,46 @@ public class BbsController extends BaseController{
     @ResponseBody
     @PostMapping("/topic/save")
     public JSONObject saveTopic(BbsTopic topic, BbsPost post, String title, String postContent,String node,HttpServletRequest request, HttpServletResponse response){
-        //@TODO， 防止频繁提交
-        BbsUser user = WebUtils.currentUser(request, response);
-//		Date lastPostTime = bbsService.getLatestPost(user.getId());
-//		long now = System.currentTimeMillis();
-//		long temp = lastPostTime.getTime();
-//		if(now-temp<1000*10){
-//			//10秒之内的提交都不处理
-//			throw new RuntimeException("提交太快，处理不了，上次提交是 "+lastPostTime);
-//		}
-
         JSONObject result = new JSONObject();
         result.put("err", 1);
+
+        BbsUser user = WebUtils.currentUser(request, response);
+        Jedis resource = jedisPool.getResource();
+        boolean sFlag = resource != null ? true : false;
+        String ip = WebUtils.getIP(request);
+        if(sFlag) {
+            //黑名单验证
+            List<String> lrange = resource.lrange(SecurityConst.HACKS_, 0, -1);
+            if (lrange.contains(ip)) {
+                result.put("msg", "????");
+                return result;
+            }
+
+            //加入黑名单
+            if (resource.exists(SecurityConst.LEVEL1_ + ip)) {
+                result.put("msg", "服务器开小差了");
+                resource.lpush(SecurityConst.HACKS_, ip);
+                logger.info("黑名单======" + ip);
+                return result;
+            }
+
+            if (resource.exists(SecurityConst.LEVEL2_ + ip)) {
+                result.put("msg", "服务器开小差了");
+                return result;
+            }
+
+            //数量限制
+            String count = resource.get(SecurityConst.LIMITS_ + ip);
+            if (StringUtils.isNotEmpty(count) && Integer.valueOf(count) > SecurityConst.LIMITS_COUNT) {
+                result.put("msg", "明天再来吧");
+                return result;
+            }
+        }
+
         //安全验证
         String vnode = (String)request.getSession().getAttribute("node");
         if(StringUtils.isEmpty(node) || !node.equals(vnode)){
-            result.put("msg", "将内容备份后刷新页面");
+            result.put("msg", "服务器异常！");
             return result;
         }
         if(user==null){
@@ -171,6 +201,16 @@ public class BbsController extends BaseController{
             result.put("err", 0);
             result.put("msg", "/bbs/topic/"+topic.getId()+"-1.html");
             request.getSession().removeAttribute("node");
+            if(sFlag) {
+                resource.setex(SecurityConst.LEVEL1_ + ip, SecurityConst.LEVEL1_TIME, "A");
+                resource.setex(SecurityConst.LEVEL2_ + ip, SecurityConst.LEVEL2_TIME, "A");
+                if (resource.exists(SecurityConst.LIMITS_ + ip)) {
+                    resource.incr(SecurityConst.LIMITS_ + ip);
+                } else {
+                    resource.incr(SecurityConst.LIMITS_ + ip);
+                    resource.expire(SecurityConst.LIMITS_ + ip, 24 * 3600);
+                }
+            }
         }
         return result;
     }
@@ -266,4 +306,5 @@ public class BbsController extends BaseController{
         bbsService.updateMsgStatus(user.getId(), p,0);
         return  new RedirectView( request.getContextPath()+"/bbs/topic/"+p+"-1.html");
     }
+
 }

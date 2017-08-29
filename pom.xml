@@ -48,6 +48,12 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!--  Spring Boot Redis -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-redis</artifactId>-->
+		<!--</dependency>-->
+
 		<!--<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
@@ -115,6 +121,11 @@
 			<groupId>com.janeluo</groupId>
 			<artifactId>ikanalyzer</artifactId>
 			<version>2012_u6</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.5.1</version>
 		</dependency>
 	</dependencies>
 

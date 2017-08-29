@@ -7,10 +7,12 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ServletComponentScan
 @EnableCaching
+@EnableScheduling
 public class TopicBbsApplication {
 
 	public static void main(String[] args) {

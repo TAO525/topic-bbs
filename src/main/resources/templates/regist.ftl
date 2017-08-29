@@ -20,6 +20,18 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/validator/bootstrapValidator.min.js"></script>
+    <script src="/js/jquery.ripples.js"></script>
+    <style>
+        body {
+           background-image: url("/images/bg2.jpg");
+
+            background-size: cover;
+
+            background-position: 50% 0;
+
+            height: 100% ;
+        }
+    </style>
 </head>
 <body>
 
@@ -141,6 +153,33 @@
                 }
             }
         });
+
+    });
+
+
+    $(document).ready(function() {
+
+        try {
+
+            $('body').ripples({
+
+                resolution: 512,
+
+                dropRadius: 20, //px
+
+                perturbance: 0.04
+
+            });
+
+
+
+        }
+
+        catch (e) {
+
+            $('.error').show().text(e);
+
+        }
 
     });
 </script>
