@@ -23,7 +23,7 @@
 </head>
 <body>
 
-
+<#include "common/background.ftl">
 <#include "common/nav.ftl">
 
 <h5><span class="result">${pagename!} </span>的搜索结果：<span class="result">${resultnum!}</span> 条</h5>

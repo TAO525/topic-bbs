@@ -88,7 +88,8 @@
 		
 		var canvas = document.createElement('canvas');
 		canvas.width = this.$el.innerWidth();
-		canvas.height = this.$el.innerHeight();
+		// canvas.height = this.$el.innerHeight();
+        canvas.height = $(document).height();
 		this.canvas = canvas;
 		this.$canvas = $(canvas);
 		this.$canvas.css({
@@ -111,7 +112,8 @@
 		$(window).on('resize', function() {
 			if (that.$el.innerWidth() != that.canvas.width || that.$el.innerHeight() != that.canvas.height) {
 				canvas.width = that.$el.innerWidth();
-				canvas.height = that.$el.innerHeight();
+				// canvas.height = that.$el.innerHeight();
+                canvas.height = $(document).height();
 			}
 		});
 

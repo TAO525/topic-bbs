@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-
+<#include "common/background.ftl">
 <#include "common/nav.ftl">
 
 <h3>主题：${(topic.content)!}</h3>

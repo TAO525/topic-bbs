@@ -27,7 +27,7 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-
+<#include "common/background.ftl">
 <#include "common/nav.ftl">
 
 <form action="${ctxPath}/bbs/admin/post/update" method="post" onsubmit="return ajaxSubmit(this)">

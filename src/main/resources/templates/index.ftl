@@ -23,7 +23,7 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-
+<#include "common/background.ftl">
 <#include "common/nav.ftl">
 
 <h4>${pagename!}</h4>

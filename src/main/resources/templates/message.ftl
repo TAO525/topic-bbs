@@ -22,7 +22,7 @@
     <script src="/js/main.js"></script>
 </head>
 <body>
-
+<#include "common/background.ftl">
 <#include "common/nav.ftl">
 
 <h3>我的消息</h3>

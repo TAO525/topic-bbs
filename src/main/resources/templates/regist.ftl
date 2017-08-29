@@ -20,22 +20,10 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/validator/bootstrapValidator.min.js"></script>
-    <script src="/js/jquery.ripples.js"></script>
-    <style>
-        body {
-           background-image: url("/images/bg2.jpg");
-
-            background-size: cover;
-
-            background-position: 50% 0;
-
-            height: 100% ;
-        }
-    </style>
 </head>
 <body>
 
-
+<#include "common/background.ftl">
 <div class="row" style="margin-right: 0px">
     <div class="col-sm-6 col-sm-offset-3">
         <form class="form-horizontal m-t" id="signupForm" action="" >
@@ -156,32 +144,6 @@
 
     });
 
-
-    $(document).ready(function() {
-
-        try {
-
-            $('body').ripples({
-
-                resolution: 512,
-
-                dropRadius: 20, //px
-
-                perturbance: 0.04
-
-            });
-
-
-
-        }
-
-        catch (e) {
-
-            $('.error').show().text(e);
-
-        }
-
-    });
 </script>
 </body>
 </html>

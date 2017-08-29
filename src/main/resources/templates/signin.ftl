@@ -20,7 +20,7 @@
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<#include "common/background.ftl">
 <div class="container">
 
     <form class="form-signin" action="${ctxPath}/bbs/user/login" onsubmit="return ajaxSubmit(this)">

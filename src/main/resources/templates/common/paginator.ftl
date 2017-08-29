@@ -1,5 +1,11 @@
 <#-- 参数说明：query 封装的分页对象 跳转路径url 跳转url参数-->
 <#macro page query pageUrl pageUrlParameter>
+<style>
+    .pagination {
+        margin-bottom: 34px;
+        margin-top: 5px;
+    }
+</style>
 <nav>
     <ul class="pagination">
         <#assign totalPage = query.totalPages/>
