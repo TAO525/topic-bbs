@@ -83,8 +83,9 @@ public class BbsServiceImpl implements BbsService {
 
             Date topiclastupdate = luceneUtil.getDateFormat().parse(luceneUtil.getDateFormat().format(lastTopicDate));
             Date postlastupdate = luceneUtil.getDateFormat().parse(luceneUtil.getDateFormat().format(lastPostDate));
-            if (fileupdateDate != null)
+            if (fileupdateDate != null) {
                 fileupdateDate = luceneUtil.getDateFormat().parse(luceneUtil.getDateFormat().format(fileupdateDate));
+            }
 
             if (fileupdateDate == null || (topiclastupdate != null && luceneUtil.dateCompare(topiclastupdate, fileupdateDate))) {
                 List<BbsTopic> topicsPo;
@@ -123,8 +124,12 @@ public class BbsServiceImpl implements BbsService {
         }catch (ParseException e) {
             e.printStackTrace();
         }
-        if(bbsTopics!=null)indexObjectsList.addAll(bbsTopics);
-        if(bbsPosts!=null)indexObjectsList.addAll(bbsPosts);
+        if(bbsTopics!=null) {
+            indexObjectsList.addAll(bbsTopics);
+        }
+        if(bbsPosts!=null) {
+            indexObjectsList.addAll(bbsPosts);
+        }
 //		System.out.println("================");
 //		System.out.println(JSONObject.toJSONString(indexObjectsList));
         return indexObjectsList;
@@ -146,7 +151,7 @@ public class BbsServiceImpl implements BbsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateTopicNice(int isNice,int id) {
         topicDao.updateTopicNice(isNice,id);
     }
@@ -173,6 +178,7 @@ public class BbsServiceImpl implements BbsService {
         return moduleDao.findAll();
     }
 
+    @Override
     @CacheEvict(value = "ModuleList", allEntries = true)
     public void clearModuleList(){
         logger.info("清除模块缓存");
@@ -268,7 +274,7 @@ public class BbsServiceImpl implements BbsService {
     public void notifyParticipant(Integer topicId, Integer ownerId) {
         List<Integer> userIds = postDao.getUserIdsByTopicId(topicId);
         for(Integer userId:userIds){
-            if(userId == ownerId){
+            if(userId.equals(ownerId)){
                 continue;
             }
             //TODO,以后改成批处理,但存在insert&update问题

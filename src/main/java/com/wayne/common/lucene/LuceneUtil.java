@@ -217,8 +217,12 @@ public class LuceneUtil {
      * @param currentPage 当前页
      */
     public Page<IndexObject> searcherKeyword(String keyword, Integer pageSize, Integer currentPage){
-    	if(keyword == null) throw new RuntimeException("关键字不能为空");
-    	if(pageSize == 0)pageSize = 10;
+    	if(keyword == null) {
+            throw new RuntimeException("关键字不能为空");
+        }
+    	if(pageSize == 0) {
+            pageSize = 10;
+        }
 		IndexReader indexReader = null;
 		Page<IndexObject> pageQuery = null;
 		List<IndexObject> searchResults = new ArrayList<>();
@@ -290,7 +294,9 @@ public class LuceneUtil {
      * @throws IOException 
      */  
     private ScoreDoc getLastScoreDoc(Integer currentPage,Integer pageSize,Query query,IndexSearcher searcher) throws IOException {  
-        if(currentPage==1)return null;//如果是第一页就返回空  
+        if(currentPage==1) {
+            return null;//如果是第一页就返回空
+        }
         int num = pageSize*(currentPage-1);//获取上一页的最后数量  
         TopDocs tds = searcher.search(query, num); 
         return tds.scoreDocs[num-1];  
@@ -333,7 +339,9 @@ public class LuceneUtil {
 	 * @return
 	 */
 	private String labelformat(String content){
-		if(StringUtils.isBlank(content))return "";
+		if(StringUtils.isBlank(content)) {
+            return "";
+        }
 		return content.replaceAll("<a", "&lt;a").replaceAll("</a>", "&lt;/a&gt;");
 	}
 	/**
@@ -342,7 +350,9 @@ public class LuceneUtil {
 	 * @return
 	 */
   public LocalDate getLocalDate(Date date){
-	  if(date == null)return null;
+	  if(date == null) {
+          return null;
+      }
 	  return LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date));
   }
   /**
@@ -354,9 +364,15 @@ public class LuceneUtil {
    * @throws ParseException 
    */
   public boolean  dateCompare(Date date1,Date date2){
-			  if(date1 == null)return false;
-			  if(date2 == null)return true;
-			  if(date1.getTime() > date2.getTime())return true;
+			  if(date1 == null) {
+                  return false;
+              }
+			  if(date2 == null) {
+                  return true;
+              }
+			  if(date1.getTime() > date2.getTime()) {
+                  return true;
+              }
 			  return false;
   }
 

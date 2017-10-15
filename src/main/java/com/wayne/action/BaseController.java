@@ -21,7 +21,7 @@ public class BaseController {
     protected static final String CODE_NAME = "verCode";
 
     @RequestMapping("/")
-    public ModelAndView index(HttpServletRequest request){
+    public ModelAndView _index(HttpServletRequest request){
         logger.info(WebUtils.getIP(request)+"==首页访问");
         return new ModelAndView( "forward:/bbs/index/1.html");
     }

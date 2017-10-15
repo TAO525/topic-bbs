@@ -21,6 +21,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugin/layer.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/baidu.js"></script>
 </head>
 <body>
 <#include "common/background.ftl">

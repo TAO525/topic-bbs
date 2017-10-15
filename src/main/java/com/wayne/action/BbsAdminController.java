@@ -161,7 +161,7 @@ public class BbsAdminController extends BaseController{
             return true ;
         }
         //如果是admin
-        if(user.getUserName().equals("admin")){
+        if("admin".equals(user.getUserName())){
             return true;
         }
 

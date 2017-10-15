@@ -30,7 +30,7 @@ public class PrintTimeMethod implements TemplateMethodModelEx {
     private String getNiceDate(Date date){
         if (null == date) return "";
         String result = null;
-        long currentTime = new Date().getTime() - date.getTime();
+        long currentTime = System.currentTimeMillis() - date.getTime();
         int time = (int)(currentTime / 1000);
         if(time < 60) {
             result = "刚刚";
