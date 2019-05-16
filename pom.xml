@@ -137,6 +137,17 @@
 				<configuration>
 					<fork>true</fork>
 				</configuration>
+				<dependencies>
+					<!-- spring热部署-->
+					<!-- https://mvnrepository.com/artifact/org.springframework/springloaded -->
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.5.RELEASE</version>
+						<scope>system</scope>
+						<systemPath>${project.basedir}/lib/springloaded-1.2.5.RELEASE.jar</systemPath>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
